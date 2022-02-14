@@ -27,6 +27,7 @@ import Simpleabi from 'contract/Simpleabi.json'
 
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
+import 'bootstrap/dist/css/bootstrap.css';
 
 
 // Vision UI Dashboard React example components
@@ -129,15 +130,18 @@ const updateEthers = async () => {
 
 
   return (
+    
     <DashboardLayout>
       <DashboardNavbar />
       <div>
           <div>
-		          <h4> {"Get/Set Contract interaction"} </h4>
-			        <button onClick={connectWalletHandler}>{connButtonText}</button>
+		          
+			        <button class={ (connButtonText=='Wallet Connected') ? 'btn btn-success' : 'btn btn-primary' } onClick={connectWalletHandler}>{connButtonText}</button>
               		    {errorMessage}
+                     
           </div>
         </div>
+        
       <VuiBox py={3}>
         <VuiBox mb={3}>
        
@@ -192,7 +196,8 @@ const updateEthers = async () => {
         
         
       </VuiBox>
-      <Footer />
+      
+        <Footer />
     </DashboardLayout>
   );
 }
