@@ -225,14 +225,7 @@ const updateEthers = async () => {
     
     <DashboardLayout>
       <DashboardNavbar />
-      <div>
-          <div>
-		          
-			        <button className={ (connButtonText=='Wallet Connected') ? 'btn btn-success' : 'btn btn-primary' } onClick={connectWalletHandler}>{connButtonText}</button>
-              		    {errorMessage}
-                     
-          </div>
-        </div>
+    
         
       <VuiBox py={3}>
         <VuiBox mb={3}>
