@@ -48,7 +48,7 @@ import { useVisionUIController, setMiniSidenav, setTransparentSidenav } from "co
 
 // Vision UI Dashboard React icons
 
-import logoM from "assets/images/small-logos/moonrocklogo.png";
+import logoM from "assets/images/small-logos/moonrocklogo3.png";
 
 // function Sidenav({ color, brand, brandName, routes, ...rest }) {
 function Sidenav({ color, brandName, routes, ...rest }) {
