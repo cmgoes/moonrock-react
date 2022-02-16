@@ -37,29 +37,9 @@ function Footer() {
           sx={{ textAlign: "center", fontWeight: "400 !important" }}
           color="white"
         >
-          @ 2022, moonrock ❤️&nbsp;&nbsp;&nbsp; by{" "}
-          <VuiTypography
-            component="a"
-            variant="button"
-            href="https://simmmple.com/"
-            sx={{ textAlign: "center", fontWeight: "500 !important" }}
-            color="white"
-            mr="2px"
-          >
-            by Spyland
-          </VuiTypography>
-          &
-          <VuiTypography
-            ml="2px"
-            mr="2px"
-            component="a"
-            variant="button"
-            href="https://spyland.in/"
-            sx={{ textAlign: "center", fontWeight: "500 !important" }}
-            color="white"
-          >
-           
-          </VuiTypography>
+          @ 2022, moonrock
+         
+         
          
         </VuiTypography>
       </VuiBox>

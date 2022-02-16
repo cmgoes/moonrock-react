@@ -21,6 +21,7 @@ import Grid from "@mui/material/Grid";
 
 
 import React, { useState } from 'react';
+import ReactApexChart from "react-apexcharts";
 
 import {ethers} from 'ethers'
 import Simpleabi from 'contract/Simpleabi.json'
@@ -40,6 +41,9 @@ import MiniStatisticsCard from "examples/Cards/StatisticsCards/MiniStatisticsCar
 // Vision UI Dashboard React base styles
 
 import colors from "assets/theme/base/colors";
+import LineChart from "examples/Charts/LineCharts/LineChart";
+import { lineChartDataDashboard } from "layouts/dashboard/data/lineChartData";
+import { lineChartOptionsDashboard } from "layouts/dashboard/data/lineChartOptions";
 
 // Dashboard layout components
 
@@ -66,6 +70,94 @@ function Dashboard() {
 	const [contract, setContract] = useState(null);
   const [balanceVal, setBalanceVal] = useState(0);
 	const [gasVal, setGasVal] = useState(null);
+
+
+  const chartOptions = {
+    chart: {
+      toolbar: {
+        show: false,
+      },
+    },
+    tooltip: {
+      theme: "dark",
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: "smooth",
+    },
+    xaxis: {
+      type: "datetime",
+      categories: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+      labels: {
+        style: {
+          colors: "#c8cfca",
+          fontSize: "10px",
+        },
+      },
+      axisBorder: {
+        show: false,
+      },
+      axisTicks: {
+        show: false,
+      },
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: "#c8cfca",
+          fontSize: "10px",
+        },
+      },
+    },
+    legend: {
+      show: false,
+    },
+    grid: {
+      strokeDashArray: 5,
+      borderColor: "#56577A",
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        shade: "dark",
+        type: "vertical",
+        shadeIntensity: 0,
+        gradientToColors: undefined, // optional, if not defined - uses the shades of same color in series
+        inverseColors: true,
+        opacityFrom: 0.8,
+        opacityTo: 0,
+        stops: [],
+      },
+      colors: ["#0075FF", "#2CD9FF"],
+    },
+    colors: ["#0075FF", "#2CD9FF"],
+  };
+
+  const chartData = [
+    {
+      name: "Mobile apps",
+      data: [500, 250, 300, 220, 500, 250, 300, 230, 300, 350, 250, 400],
+    },
+    {
+      name: "Websites",
+      data: [200, 230, 300, 350, 370, 420, 550, 350, 400, 500, 330, 550],
+    },
+  ];
 
   const connectWalletHandler = () => {
 
@@ -136,7 +228,7 @@ const updateEthers = async () => {
       <div>
           <div>
 		          
-			        <button class={ (connButtonText=='Wallet Connected') ? 'btn btn-success' : 'btn btn-primary' } onClick={connectWalletHandler}>{connButtonText}</button>
+			        <button className={ (connButtonText=='Wallet Connected') ? 'btn btn-success' : 'btn btn-primary' } onClick={connectWalletHandler}>{connButtonText}</button>
               		    {errorMessage}
                      
           </div>
@@ -146,7 +238,7 @@ const updateEthers = async () => {
         <VuiBox mb={3}>
        
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6} xl={3}>
+            <Grid item xs={12} md={6} xl={6}>
               <MiniStatisticsCard
                 title={{ text: "Totale balance", fontWeight: "regular" }}
                 count={"$" +balanceVal}
@@ -154,10 +246,11 @@ const updateEthers = async () => {
                 icon={{ color: "info", component: <IoCash size="22px" color="white" /> }}
               />
             </Grid>
-            <Grid item xs={12} lg={12} xl={5}>
+           
+            <Grid item xs={12} lg={12} xl={12}>
               Details
             </Grid> 
-            <Grid item xs={12} md={6} xl={3}>
+            <Grid item xs={12} md={6} xl={6}>
               <MiniStatisticsCard
                 title={{ text: "Totale reflection ricevute ultime 24h" }}
                 count="00"
@@ -165,7 +258,7 @@ const updateEthers = async () => {
                 icon={{ color: "info", component: <IoCash size="22px" color="white" /> }}
               />
             </Grid>
-            <Grid item xs={12} md={6} xl={3}>
+            <Grid item xs={12} md={6} xl={6}>
               <MiniStatisticsCard
                 title={{ text: "Totale supply ROCK" }}
                 count="$0"
@@ -173,7 +266,7 @@ const updateEthers = async () => {
                 icon={{ color: "info", component: <IoCash size="20px" color="white" /> }}
               />
             </Grid>
-            <Grid item xs={12} md={6} xl={3}>
+            <Grid item xs={12} md={6} xl={6}>
               <MiniStatisticsCard
                 title={{ text: "Totale reflection ricevute da primo buy" }}
                 count="+0"
@@ -182,7 +275,7 @@ const updateEthers = async () => {
               />
             </Grid>
             
-            <Grid item xs={12} md={6} xl={3}>
+            <Grid item xs={12} md={6} xl={6}>
               <MiniStatisticsCard
                 title={{ text: "Totale burned token ROCK" }}
                 count="$0"
@@ -190,12 +283,20 @@ const updateEthers = async () => {
                 icon={{ color: "info", component: <IoCash size="20px" color="white" /> }}
               />
             </Grid>
+            <Grid item xs={12} md={12} xl={12}>
+            <LineChart
+                      lineChartData={lineChartDataDashboard}
+                      lineChartOptions={lineChartOptionsDashboard}
+                    />
+            </Grid>
           </Grid>
         </VuiBox>
        
         
         
       </VuiBox>
+
+     
       
         <Footer />
     </DashboardLayout>
