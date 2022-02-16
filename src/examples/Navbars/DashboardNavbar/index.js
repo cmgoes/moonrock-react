@@ -85,6 +85,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
 	const [contract, setContract] = useState(null);
   const [balanceVal, setBalanceVal] = useState(0);
 	const [gasVal, setGasVal] = useState(null);
+  const [moonRockData,setMoonRockData] = useState(null);
 
 
   const connectWalletHandler = () => {
@@ -96,6 +97,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
  .then(result => {
    accountChangedHandler(result[0]);
    setConnButtonText('Wallet Connected');
+   apiGet() ;
 
  })
  .catch(error => {
@@ -109,6 +111,16 @@ function DashboardNavbar({ absolute, light, isMini }) {
 }
 
 }
+
+const apiGet = () => {
+  fetch("https://api.coinstats.app/public/v1/coins/moonrock?currency=USD")
+    .then((response) => response.json())
+    .then((json) => {
+      console.log(json);
+      setMoonRockData(json);
+      console.log(moonRockData);
+    });
+};
 
 // update account, will cause component re-render
 const accountChangedHandler = (newAccount) => {
@@ -198,7 +210,7 @@ const updateEthers = async () => {
               		    {errorMessage}                     
           </div>
         </div>
-            <VuiBox pr={1}>
+            {/* <VuiBox pr={1}>
           
               <VuiInput
                 placeholder="Type here..."
@@ -213,7 +225,7 @@ const updateEthers = async () => {
                   backgroundColor: "info.main !important",
                 })}
               />
-            </VuiBox>
+            </VuiBox> */}
             <VuiBox color={light ? "white" : "inherit"}>
               <IconButton
                 size="small"
