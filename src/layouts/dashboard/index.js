@@ -29,6 +29,9 @@ import ReactApexChart from "react-apexcharts";
 import VuiBox from "components/VuiBox";
 import 'bootstrap/dist/css/bootstrap.css';
 
+import {ethers} from 'ethers'
+import Simpleabi from 'contract/Simpleabi.json'
+
 
 // Vision UI Dashboard React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -69,96 +72,91 @@ function Dashboard() {
 	const [contract, setContract] = useState(null);
   const [balanceVal, setBalanceVal] = useState(0);
 	const [gasVal, setGasVal] = useState(null);
+  const [moonRockData,setMoonRockData] = useState(null);
+  const [count,setCount] = useState(0);
+  const[count2,setCount2] =  useState(0);
 
 
-  const chartOptions = {
-    chart: {
-      toolbar: {
-        show: false,
-      },
-    },
-    tooltip: {
-      theme: "dark",
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      curve: "smooth",
-    },
-    xaxis: {
-      type: "datetime",
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
-      labels: {
-        style: {
-          colors: "#c8cfca",
-          fontSize: "10px",
-        },
-      },
-      axisBorder: {
-        show: false,
-      },
-      axisTicks: {
-        show: false,
-      },
-    },
-    yaxis: {
-      labels: {
-        style: {
-          colors: "#c8cfca",
-          fontSize: "10px",
-        },
-      },
-    },
-    legend: {
-      show: false,
-    },
-    grid: {
-      strokeDashArray: 5,
-      borderColor: "#56577A",
-    },
-    fill: {
-      type: "gradient",
-      gradient: {
-        shade: "dark",
-        type: "vertical",
-        shadeIntensity: 0,
-        gradientToColors: undefined, // optional, if not defined - uses the shades of same color in series
-        inverseColors: true,
-        opacityFrom: 0.8,
-        opacityTo: 0,
-        stops: [],
-      },
-      colors: ["#0075FF", "#2CD9FF"],
-    },
-    colors: ["#0075FF", "#2CD9FF"],
-  };
+  
+  const connectWalletHandler = () => {
 
-  const chartData = [
-    {
-      name: "Mobile apps",
-      data: [500, 250, 300, 220, 500, 250, 300, 230, 300, 350, 250, 400],
-    },
-    {
-      name: "Websites",
-      data: [200, 230, 300, 350, 370, 420, 550, 350, 400, 500, 330, 550],
-    },
-  ];
+    console.log("logged");
+   if (window.ethereum && window.ethereum.isMetaMask) {
 
+ window.ethereum.request({ method: 'eth_requestAccounts'})
+ .then(result => {
+   accountChangedHandler(result[0]);
+   setConnButtonText('Wallet Connected');
+   apiGet() ;
+   
+    
+ })
+ .catch(error => {
+   setErrorMessage(error.message);
  
+ });
+
+} else {
+ console.log('Need to install MetaMask');
+ setErrorMessage('Please install MetaMask browser extension to interact');
+}
+
+}
+
+const apiGet =  () => {
+  fetch("https://api.coinstats.app/public/v1/coins/moonrock?currency=USD")
+    .then((response) => response.json())
+    .then((json) => {
+      console.log(json);
+      setMoonRockData(json);
+      let count1 = json != null?json.coin.priceChange1d:0;
+      let value = json != null?json.coin.price:0;
+      let data = (value/100 ) * count1;
+      setCount(count1);
+      setCount2(value);
+
+    
+      console.log(moonRockData);
+     
+    });
+};
+
+// update account, will cause component re-render
+const accountChangedHandler = (newAccount) => {
+ setDefaultAccount(newAccount);
+ updateEthers();
+}
+
+const chainChangedHandler = () => {
+ // reload the page to avoid any errors with chain change mid use of application
+ window.location.reload();
+}
+
+
+// listen for account changes
+window.ethereum.on('accountsChanged', accountChangedHandler);
+
+window.ethereum.on('chainChanged', chainChangedHandler);
+
+const updateEthers = async () => {
+ let tempProvider = new ethers.providers.Web3Provider(window.ethereum);
+ setProvider(tempProvider);
+
+ let tempSigner = tempProvider.getSigner();
+ setSigner(tempSigner);
+
+ let tempContract = new ethers.Contract(contractAddress, Simpleabi, tempSigner);
+ setContract(tempContract);
+ let balance =  await tempSigner.getBalance();
+   let gasprice =  await tempSigner.getGasPrice();
+   //const balance = await tempContract.balanceOf(tempContract.address);
+   console.log(balance);
+   console.log(typeof balance);
+   console.log(parseInt(balance,16));
+   setBalanceVal(parseFloat(''+parseInt(balance,16)).toFixed(2));
+   console.log(parseInt(gasprice,16));
+   setGasVal(parseInt(gasprice,16));	
+}
  
 
 
@@ -166,7 +164,7 @@ function Dashboard() {
   return (
     
     <DashboardLayout>
-      <DashboardNavbar />
+      <DashboardNavbar connectWalletHandler={connectWalletHandler} connButtonText={connButtonText} />
     
         
       <VuiBox py={3}>
@@ -176,7 +174,7 @@ function Dashboard() {
             <Grid item xs={12} md={6} xl={6}>
               <MiniStatisticsCard
                 title={{ text: "Totale balance", fontWeight: "regular" }}
-                count={"$" +balanceVal}
+                count={"$" + balanceVal}
                 percentage={{ color: "success", text: "+0%" }}
                 icon={{ color: "info", component: <IoCash size="22px" color="white" /> }}
               />
@@ -186,17 +184,18 @@ function Dashboard() {
               Details
             </Grid> 
             <Grid item xs={12} md={6} xl={6}>
+            
               <MiniStatisticsCard
                 title={{ text: "Totale reflection ricevute ultime 24h" }}
-                count="00"
-                percentage={{ color: "success", text: "+0%" }}
+                count= {count2}
+                percentage={{ color: "success", text: count }}
                 icon={{ color: "info", component: <IoCash size="22px" color="white" /> }}
               />
             </Grid>
             <Grid item xs={12} md={6} xl={6}>
               <MiniStatisticsCard
                 title={{ text: "Totale supply ROCK" }}
-                count="$0"
+                count={moonRockData != null?moonRockData.coin.totalSupply:0}
                 percentage={{ color: "success", text: "+0%" }}
                 icon={{ color: "info", component: <IoCash size="20px" color="white" /> }}
               />
@@ -213,7 +212,7 @@ function Dashboard() {
             <Grid item xs={12} md={6} xl={6}>
               <MiniStatisticsCard
                 title={{ text: "Totale burned token ROCK" }}
-                count="$0"
+                count="$10000"
                 percentage={{ color: "success", text: "+0%" }}
                 icon={{ color: "info", component: <IoCash size="20px" color="white" /> }}
               />
