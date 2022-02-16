@@ -79,7 +79,7 @@ const Moonbridge = () => {
         <VuiBox mb={3}>
         
         <Grid container spacing={3}>
-            <Grid item xs={12} md={6} xl={3}>
+            <Grid item xs={12} md={12} xl={12}>
             
             <div className="container">
     <div className="row">

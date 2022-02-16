@@ -49,7 +49,7 @@ import { IoSync } from "react-icons/io5";
 const routes = [
   {
     type: "collapse",
-    name: "Dashboard",
+    name: "MOONBOARD",
     key: "dashboard",
     route: "/dashboard",
     icon: <IoHome size="15px" color="inherit" />,
@@ -58,7 +58,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Portfolio",
+    name: "COMMUNITY TREASURY",
     key: "portfolio",
     route: "/portfolio",
     icon: <IoMan size="15px" color="inherit" />,
@@ -67,7 +67,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "MoonBridge Wallet",
+    name: "MOONSWAP",
     key: "moonbridge",
     route: "/moonbridge",
     icon: <IoSync size="15px" color="inherit" />,

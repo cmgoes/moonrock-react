@@ -186,13 +186,13 @@ function Sidenav({ color, brandName, routes, ...rest }) {
               }
             >
               {/* <SimmmpleLogo size="24px" /> */}
-              <img src={logoM}  height="24px" />
+              <img src={logoM}  height="30px" />
             </VuiBox>
             <VuiTypography
               variant="button"
               textGradient={true}
               color="logo"
-              fontSize={14}
+              fontSize={20}
               letterSpacing={2}
               fontWeight="medium"
               sx={
@@ -201,6 +201,7 @@ function Sidenav({ color, brandName, routes, ...rest }) {
                   opacity: miniSidenav || (miniSidenav && transparentSidenav) ? 0 : 1,
                   maxWidth: miniSidenav || (miniSidenav && transparentSidenav) ? 0 : "100%",
                   margin: "0 auto",
+                  fontSize:"20px !important"
                 })
               }
             >
