@@ -30,6 +30,7 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import Icon from "@mui/material/Icon";
+import Grid from "@mui/material/Grid";
 
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
@@ -63,7 +64,7 @@ import {
 import team2 from "assets/images/team-2.jpg";
 import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 
-function DashboardNavbar({ absolute, light, isMini, connectWalletHandler, connButtonText}) {
+function DashboardNavbar({ absolute, light, isMini, connectWalletHandler, connButtonText,defaultAccount}) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useVisionUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;
@@ -123,9 +124,11 @@ function DashboardNavbar({ absolute, light, isMini, connectWalletHandler, connBu
         {isMini ? null : (
           <VuiBox sx={(theme) => navbarRow(theme, { isMini })}>
            <div>
-          <div>	          
-			        <button className={ (connButtonText=='Wallet Connected') ? 'btn btn-success' : 'btn btn-primary' } onClick={connectWalletHandler}>{connButtonText}</button>
-              		                     
+          <div>	
+            <div style={{ display: 'flex'}}>
+          <div style={{ color: '#FFF',marginRight:"10px"}}>{defaultAccount }</div>      
+			        <button className={ (connButtonText=='Disconnect Wallet') ? 'btn btn-success' : 'btn btn-primary' } onClick={connectWalletHandler}>{connButtonText}</button>
+              		 </div>                  
           </div>
         </div>
             {/* <VuiBox pr={1}>

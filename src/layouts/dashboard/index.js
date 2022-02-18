@@ -80,13 +80,16 @@ function Dashboard() {
   
   const connectWalletHandler = () => {
 
+    if(connButtonText=='Disconnect Wallet'){
+      window.location.reload();
+    }
     console.log("logged");
    if (window.ethereum && window.ethereum.isMetaMask) {
 
  window.ethereum.request({ method: 'eth_requestAccounts'})
  .then(result => {
    accountChangedHandler(result[0]);
-   setConnButtonText('Wallet Connected');
+   setConnButtonText('Disconnect Wallet');
    apiGet() ;
    
     
@@ -164,8 +167,8 @@ const updateEthers = async () => {
   return (
     
     <DashboardLayout>
-      <DashboardNavbar connectWalletHandler={connectWalletHandler} connButtonText={connButtonText} />
-    
+      <DashboardNavbar connectWalletHandler={connectWalletHandler} connButtonText={connButtonText} defaultAccount={defaultAccount} />
+    {errorMessage}
         
       <VuiBox py={3}>
         <VuiBox mb={3}>
@@ -174,7 +177,7 @@ const updateEthers = async () => {
             <Grid item xs={12} md={6} xl={6}>
               <MiniStatisticsCard
                 title={{ text: "Totale balance", fontWeight: "regular" }}
-                count={"$" + balanceVal}
+                count={ balanceVal}
                 percentage={{ color: "success", text: "+0%" }}
                 icon={{ color: "info", component: <IoCash size="22px" color="white" /> }}
               />
@@ -183,7 +186,7 @@ const updateEthers = async () => {
             <Grid item xs={12} lg={12} xl={12}>
               Details
             </Grid> 
-            <Grid item xs={12} md={6} xl={6}>
+            <Grid item xs={12} md={3} xl={3}>
             
               <MiniStatisticsCard
                 title={{ text: "Totale reflection ricevute ultime 24h" }}
@@ -192,15 +195,15 @@ const updateEthers = async () => {
                 icon={{ color: "info", component: <IoCash size="22px" color="white" /> }}
               />
             </Grid>
-            <Grid item xs={12} md={6} xl={6}>
+            <Grid item xs={12} md={3} xl={3}>
               <MiniStatisticsCard
                 title={{ text: "Totale supply ROCK" }}
-                count={moonRockData != null?moonRockData.coin.totalSupply:0}
+                count="990,000,000.00"
                 percentage={{ color: "success", text: "+0%" }}
                 icon={{ color: "info", component: <IoCash size="20px" color="white" /> }}
               />
             </Grid>
-            <Grid item xs={12} md={6} xl={6}>
+            <Grid item xs={12} md={3} xl={3}>
               <MiniStatisticsCard
                 title={{ text: "Totale reflection ricevute da primo buy" }}
                 count="+0"
@@ -209,10 +212,10 @@ const updateEthers = async () => {
               />
             </Grid>
             
-            <Grid item xs={12} md={6} xl={6}>
+            <Grid item xs={12} md={3} xl={3}>
               <MiniStatisticsCard
                 title={{ text: "Totale burned token ROCK" }}
-                count="$10000"
+                count="10000"
                 percentage={{ color: "success", text: "+0%" }}
                 icon={{ color: "info", component: <IoCash size="20px" color="white" /> }}
               />
