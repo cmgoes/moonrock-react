@@ -116,9 +116,9 @@ function Dashboard() {
     //apiGet();
     setRockcirculating(data.data.ROCK.total_supply);
     setRockBurned(data.data.ROCK.circulating_supply);
-    setRockPrice(data.data.ROCK.quote.USD.price);
+    setRockPrice(parseFloat(data.data.ROCK.quote.USD.price).toPrecision(5));
     setRockMarketCap(data.data.ROCK.quote.USD.market_cap);
-    setLast24hrsVolume(data.data.ROCK.quote.USD.volume_24h);
+    setLast24hrsVolume(parseFloat(data.data.ROCK.quote.USD.volume_24h).toPrecision(8));
     setVolumeChange24h(data.data.ROCK.quote.USD.volume_change_24h);
     setMarketRank(data.data.ROCK.cmc_rank);
    },[]);
