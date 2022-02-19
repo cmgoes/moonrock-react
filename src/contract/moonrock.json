@@ -1,0 +1,136 @@
+{
+  "status": {
+    "timestamp": "2022-02-18T20:19:29.451Z",
+    "error_code": 0,
+    "error_message": null,
+    "elapsed": 31,
+    "credit_count": 1,
+    "notice": null
+  },
+  "data": {
+    "ROCK": [
+      {
+        "id": 16192,
+        "name": "MoonRock",
+        "symbol": "ROCK",
+        "slug": "moonrock",
+        "num_market_pairs": 1,
+        "date_added": "2021-12-17T05:58:33.000Z",
+        "tags": [],
+        "max_supply": 1000000000,
+        "circulating_supply": 0,
+        "total_supply": 1000000000,
+        "platform": {
+          "id": 1839,
+          "name": "BNB Chain (BEP20)",
+          "symbol": "BNB",
+          "slug": "bnb",
+          "token_address": "0x4ba8a637c6b36e7890c870ba7dbbd8128dac8b40"
+        },
+        "is_active": 1,
+        "cmc_rank": 5694,
+        "is_fiat": 0,
+        "self_reported_circulating_supply": 990000000,
+        "self_reported_market_cap": 9726002.903992735,
+        "last_updated": "2022-02-18T20:18:00.000Z",
+        "quote": {
+          "USD": {
+            "price": 0.00982424535756842,
+            "volume_24h": 15685.12777086,
+            "volume_change_24h": 15.9412,
+            "percent_change_1h": 0.96525717,
+            "percent_change_24h": -2.57487923,
+            "percent_change_7d": -17.55787871,
+            "percent_change_30d": -60.54300188,
+            "percent_change_60d": 427.32527249,
+            "percent_change_90d": 855.51285199,
+            "market_cap": 0,
+            "market_cap_dominance": 0,
+            "fully_diluted_market_cap": 9824245.36,
+            "last_updated": "2022-02-18T20:18:00.000Z"
+          }
+        }
+      },
+      {
+        "id": 15842,
+        "name": "Bedrock",
+        "symbol": "ROCK",
+        "slug": "bedrock",
+        "num_market_pairs": 2,
+        "date_added": "2021-12-09T07:35:35.000Z",
+        "tags": [],
+        "max_supply": 500000000,
+        "circulating_supply": 0,
+        "total_supply": 500000000,
+        "platform": {
+          "id": 1839,
+          "name": "BNB Chain (BEP20)",
+          "symbol": "BNB",
+          "slug": "bnb",
+          "token_address": "0xC3387E4285e9F80A7cFDf02B4ac6cdF2476A528A"
+        },
+        "is_active": 1,
+        "cmc_rank": 6626,
+        "is_fiat": 0,
+        "self_reported_circulating_supply": 100000000,
+        "self_reported_market_cap": 5638367.709316262,
+        "last_updated": "2022-02-18T20:18:00.000Z",
+        "quote": {
+          "USD": {
+            "price": 0.05638367709316262,
+            "volume_24h": 3058.03056314,
+            "volume_change_24h": -88.2537,
+            "percent_change_1h": -0.09528993,
+            "percent_change_24h": -0.30186078,
+            "percent_change_7d": -6.60909782,
+            "percent_change_30d": -42.60730929,
+            "percent_change_60d": -74.16369143,
+            "percent_change_90d": -77.01876673,
+            "market_cap": 0,
+            "market_cap_dominance": 0,
+            "fully_diluted_market_cap": 28191838.55,
+            "last_updated": "2022-02-18T20:18:00.000Z"
+          }
+        }
+      },
+      {
+        "id": 3494,
+        "name": "Rocketcoin",
+        "symbol": "ROCK",
+        "slug": "rocketcoin",
+        "num_market_pairs": 0,
+        "date_added": "2018-10-24T00:00:00.000Z",
+        "tags": [
+          { "slug": "mineable", "name": "Mineable", "category": "OTHER" }
+        ],
+        "max_supply": 500000000,
+        "circulating_supply": 134950363.933517,
+        "total_supply": 134956388.293926,
+        "is_active": 0,
+        "platform": null,
+        "cmc_rank": null,
+        "is_fiat": 0,
+        "self_reported_circulating_supply": null,
+        "self_reported_market_cap": null,
+        "last_updated": "2019-08-03T02:59:12.000Z",
+        "quote": {
+          "USD": {
+            "price": 0.0000113,
+            "volume_24h": 0,
+            "volume_change_24h": 0,
+            "percent_change_1h": 0,
+            "percent_change_24h": 0,
+            "percent_change_7d": 0,
+            "percent_change_30d": 0,
+            "percent_change_60d": 0,
+            "percent_change_90d": 0,
+            "market_cap": 1524.9391124487422,
+            "market_cap_dominance": 0,
+            "fully_diluted_market_cap": 0,
+            "last_updated": "2019-08-03T02:59:12.000Z"
+          }
+        }
+      }
+    ]
+  }
+}

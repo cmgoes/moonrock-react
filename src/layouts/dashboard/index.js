@@ -20,7 +20,7 @@
 import Grid from "@mui/material/Grid";
 
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import ReactApexChart from "react-apexcharts";
 
 
@@ -31,6 +31,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import {ethers} from 'ethers'
 import Simpleabi from 'contract/Simpleabi.json'
+import data from 'contract/data.json'
 
 
 // Vision UI Dashboard React example components
@@ -59,13 +60,18 @@ function Dashboard() {
   const { gradients } = colors;
   let contractAddress = '0x4ba8a637c6b36e7890c870ba7dbbd8128dac8b40';
 
-  //let contractAddress = '0xE05AC61617A6a7823e8C8a43af156eAdB7469D02';
+  //let contractAddress = '0xAE2Ab58699b5A36a2bccA301d2fD88F5E72984b1';
 
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [defaultAccount, setDefaultAccount] = useState(null);
 	const [connButtonText, setConnButtonText] = useState('Connect Wallet');
 
 	const [currentContractVal, setCurrentContractVal] = useState(null);
+  const [tokenName, setTokenName] = useState("Token");
+	const [balance, setBalance] = useState(null);
+  const [userBalance,setUserBalance] = useState(0);
+  const [$,set$] = useState("");
+
 
 	const [provider, setProvider] = useState(null);
 	const [signer, setSigner] = useState(null);
@@ -75,12 +81,52 @@ function Dashboard() {
   const [moonRockData,setMoonRockData] = useState(null);
   const [count,setCount] = useState(0);
   const[count2,setCount2] =  useState(0);
+  const[rockcirculating,setRockcirculating] = useState(0);
+  const[rockBurned,setRockBurned] = useState(0);
+  const[rockPrice,setRockPrice] = useState(0);
+  const[rockMarketCap,setRockMarketCap] = useState(0);
+  const[last24hrsVolume,setLast24hrsVolume] = useState(0);
+  const[marketRank,setMarketRank] = useState(0);
+  const[volumeChange24h,setVolumeChange24h]= useState(0);
+  
+  
 
+  const headers = {'Accept': 'application/json',
+  'Content-Type': 'application/json',
+  'X-CMC_PRO_API_KEY':'75e00f1a-cfef-40f9-958e-25ef02fb9a95',
+  'Access-Control-Allow-Origin': '*' };
+
+  useEffect(() => {    
+    const headers = {'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'X-CMC_PRO_API_KEY':'75e00f1a-cfef-40f9-958e-25ef02fb9a95',
+    'Access-Control-Allow-Origin': '*' };
+
+    const apiGet =  () => {
+      fetch("https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=ROCK",{headers})
+        .then((response) => {
+        response.set('Access-Control-Allow-Origin', '*');
+        response.json()})
+        .then((json) => {
+          console.log(json);
+         
+         
+        });
+    };
+    //apiGet();
+    setRockcirculating(data.data.ROCK.total_supply);
+    setRockBurned(data.data.ROCK.circulating_supply);
+    setRockPrice(data.data.ROCK.quote.USD.price);
+    setRockMarketCap(data.data.ROCK.quote.USD.market_cap);
+    setLast24hrsVolume(data.data.ROCK.quote.USD.volume_24h);
+    setVolumeChange24h(data.data.ROCK.quote.USD.volume_change_24h);
+    setMarketRank(data.data.ROCK.cmc_rank);
+   },[]);
 
   
   const connectWalletHandler = () => {
 
-    if(connButtonText=='Disconnect Wallet'){
+    if(connButtonText==='Disconnect Wallet'){
       window.location.reload();
     }
     console.log("logged");
@@ -90,7 +136,7 @@ function Dashboard() {
  .then(result => {
    accountChangedHandler(result[0]);
    setConnButtonText('Disconnect Wallet');
-   apiGet() ;
+   
    
     
  })
@@ -106,23 +152,6 @@ function Dashboard() {
 
 }
 
-const apiGet =  () => {
-  fetch("https://api.coinstats.app/public/v1/coins/moonrock?currency=USD")
-    .then((response) => response.json())
-    .then((json) => {
-      console.log(json);
-      setMoonRockData(json);
-      let count1 = json != null?json.coin.priceChange1d:0;
-      let value = json != null?json.coin.price:0;
-      let data = (value/100 ) * count1;
-      setCount(count1);
-      setCount2(value);
-
-    
-      console.log(moonRockData);
-     
-    });
-};
 
 // update account, will cause component re-render
 const accountChangedHandler = (newAccount) => {
@@ -136,10 +165,15 @@ const chainChangedHandler = () => {
 }
 
 
-// listen for account changes
+//listen for account changes
+if (window.ethereum && window.ethereum.isMetaMask) {
 window.ethereum.on('accountsChanged', accountChangedHandler);
 
 window.ethereum.on('chainChanged', chainChangedHandler);
+}else{
+  console.log('Need to install MetaMask');
+ setErrorMessage('Please install MetaMask browser extension to interact');
+}
 
 const updateEthers = async () => {
  let tempProvider = new ethers.providers.Web3Provider(window.ethereum);
@@ -150,17 +184,63 @@ const updateEthers = async () => {
 
  let tempContract = new ethers.Contract(contractAddress, Simpleabi, tempSigner);
  setContract(tempContract);
- let balance =  await tempSigner.getBalance();
-   let gasprice =  await tempSigner.getGasPrice();
-   //const balance = await tempContract.balanceOf(tempContract.address);
-   console.log(balance);
-   console.log(typeof balance);
-   console.log(parseInt(balance,16));
-   setBalanceVal(parseFloat(''+parseInt(balance,16)).toFixed(2));
-   console.log(parseInt(gasprice,16));
-   setGasVal(parseInt(gasprice,16));	
-}
  
+}
+
+const updateBalance = async () => {
+  let balanceBigN = await contract.balanceOf(defaultAccount);
+  let balanceNumber = balanceBigN;
+
+  let tokenDecimals = await contract.decimals();
+
+  let tokenBalance = balanceNumber / Math.pow(10, tokenDecimals);
+
+  setBalance(toFixed(tokenBalance));
+  console.log(toFixed(tokenBalance));
+  if(defaultAccount){
+    provider.getBalance(defaultAccount)
+    .then(balanceResult => {
+      setUserBalance(parseFloat(ethers.utils.formatEther(balanceResult)).toPrecision(5));
+      console.log(parseFloat(ethers.utils.formatEther(balanceResult)).toPrecision(5));
+      let a = parseFloat(ethers.utils.formatEther(balanceResult)).toPrecision(5)*391;
+      set$(a);
+      
+    })
+    };
+
+}
+function toFixed(x) {
+  if (Math.abs(x) < 1.0) {
+     var e = parseInt(x.toString().split('e-')[1]);
+     if (e) {
+        x *= Math.pow(10, e - 1);
+        x = '0.' + (new Array(e)).join('0') + x.toString().substring(2);
+     }
+  } else {
+     var e = parseInt(x.toString().split('+')[1]);
+     if (e > 20) {
+        e -= 20;
+        x /= Math.pow(10, e);
+        x += (new Array(e + 1)).join('0');
+     }
+  }
+  return x;
+}
+const getCurrentVal = async () => {
+  let val = await contract.get();
+  setCurrentContractVal(val);
+}
+const updateTokenName = async () => {
+  setTokenName(await contract.name());
+}
+useEffect(() => {
+  if (contract != null) {
+    updateBalance();
+    //updateTokenName();
+  }
+}, [contract,updateBalance]);
+
+
 
 
 
@@ -174,10 +254,26 @@ const updateEthers = async () => {
         <VuiBox mb={3}>
        
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6} xl={6}>
+            <Grid item xs={12} md={4} xl={4}>
               <MiniStatisticsCard
-                title={{ text: "Totale balance", fontWeight: "regular" }}
-                count={ balanceVal}
+                title={{ text: "Totale Rock Balance", fontWeight: "regular" }}
+                count={ userBalance }
+                percentage={{ color: "success", text:"$"+ $.toString() }}
+                icon={{ color: "info", component: <IoCash size="22px" color="white" /> }}
+              />
+            </Grid>
+            <Grid item xs={12} md={4} xl={4}>
+              <MiniStatisticsCard
+                title={{ text: "Totale reflection ricevute ultime 24h", fontWeight: "regular" }}
+                count={0}
+                percentage={{ color: "success", text: "+0%" }}
+                icon={{ color: "info", component: <IoCash size="22px" color="white" /> }}
+              />
+            </Grid>
+            <Grid item xs={12} md={4} xl={4}>
+              <MiniStatisticsCard
+                title={{ text: "Totale reflection ricevute da primo buy", fontWeight: "regular" }}
+                count={0}
                 percentage={{ color: "success", text: "+0%" }}
                 icon={{ color: "info", component: <IoCash size="22px" color="white" /> }}
               />
@@ -186,37 +282,53 @@ const updateEthers = async () => {
             <Grid item xs={12} lg={12} xl={12}>
               Details
             </Grid> 
-            <Grid item xs={12} md={3} xl={3}>
+            <Grid item xs={12} md={4} xl={4}>
             
               <MiniStatisticsCard
-                title={{ text: "Totale reflection ricevute ultime 24h" }}
-                count= {count2}
+                title={{ text: "Rock Circulating Supply" }}
+                count= {rockcirculating}
                 percentage={{ color: "success", text: count }}
                 icon={{ color: "info", component: <IoCash size="22px" color="white" /> }}
               />
             </Grid>
-            <Grid item xs={12} md={3} xl={3}>
+            <Grid item xs={12} md={4} xl={4}>
               <MiniStatisticsCard
-                title={{ text: "Totale supply ROCK" }}
-                count="990,000,000.00"
+                title={{ text: "Totale ROCK Burned" }}
+                count={rockBurned}
                 percentage={{ color: "success", text: "+0%" }}
                 icon={{ color: "info", component: <IoCash size="20px" color="white" /> }}
               />
             </Grid>
-            <Grid item xs={12} md={3} xl={3}>
+            <Grid item xs={12} md={4} xl={4}>
               <MiniStatisticsCard
-                title={{ text: "Totale reflection ricevute da primo buy" }}
-                count="+0"
+                title={{ text: "Rock Price" }}
+                count={rockPrice}
                 percentage={{ color: "error", text: "-0%" }}
                 icon={{ color: "info", component: <IoCash size="22px" color="white" /> }}
               />
             </Grid>
             
-            <Grid item xs={12} md={3} xl={3}>
+            <Grid item xs={12} md={4} xl={4}>
               <MiniStatisticsCard
-                title={{ text: "Totale burned token ROCK" }}
-                count="10000"
+                title={{ text: "ROCK Market Cap" }}
+                count={'$'+rockMarketCap}
                 percentage={{ color: "success", text: "+0%" }}
+                icon={{ color: "info", component: <IoCash size="20px" color="white" /> }}
+              />
+            </Grid>
+            <Grid item xs={12} md={4} xl={4}>
+              <MiniStatisticsCard
+                title={{ text: "Last 24Hours Volume" }}
+                count={'$'+last24hrsVolume}
+                percentage={{ color: "success", text: volumeChange24h.toString() }}
+                icon={{ color: "info", component: <IoCash size="20px" color="white" /> }}
+              />
+            </Grid>
+            <Grid item xs={12} md={4} xl={4}>
+              <MiniStatisticsCard
+                title={{ text: "Market Rank" }}
+                count={'#'+marketRank}
+                percentage={{ color: "success", text: "^0" }}
                 icon={{ color: "info", component: <IoCash size="20px" color="white" /> }}
               />
             </Grid>

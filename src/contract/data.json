@@ -1,0 +1,54 @@
+{
+  "status": {
+    "timestamp": "2022-02-19T08:45:47.945Z",
+    "error_code": 0,
+    "error_message": null,
+    "elapsed": 28,
+    "credit_count": 1,
+    "notice": null
+  },
+  "data": {
+    "ROCK": {
+      "id": 16192,
+      "name": "MoonRock",
+      "symbol": "ROCK",
+      "slug": "moonrock",
+      "num_market_pairs": 1,
+      "date_added": "2021-12-17T05:58:33.000Z",
+      "tags": [],
+      "max_supply": 1000000000,
+      "circulating_supply": 0,
+      "total_supply": 1000000000,
+      "platform": {
+        "id": 1839,
+        "name": "BNB Chain (BEP20)",
+        "symbol": "BNB",
+        "slug": "bnb",
+        "token_address": "0x4ba8a637c6b36e7890c870ba7dbbd8128dac8b40"
+      },
+      "is_active": 1,
+      "cmc_rank": 5548,
+      "is_fiat": 0,
+      "self_reported_circulating_supply": 990000000,
+      "self_reported_market_cap": 10191639.416529244,
+      "last_updated": "2022-02-19T08:44:00.000Z",
+      "quote": {
+        "USD": {
+          "price": 0.010294585269221458,
+          "volume_24h": 14991.37632005,
+          "volume_change_24h": 21.9777,
+          "percent_change_1h": -0.16185772,
+          "percent_change_24h": 3.5905512,
+          "percent_change_7d": -13.55522137,
+          "percent_change_30d": -60.84243884,
+          "percent_change_60d": 349.52319875,
+          "percent_change_90d": 901.25843489,
+          "market_cap": 0,
+          "market_cap_dominance": 0,
+          "fully_diluted_market_cap": 10294585.27,
+          "last_updated": "2022-02-19T08:44:00.000Z"
+        }
+      }
+    }
+  }
+}
