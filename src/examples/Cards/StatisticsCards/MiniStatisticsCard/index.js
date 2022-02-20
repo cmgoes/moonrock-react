@@ -71,6 +71,10 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction
                     {percentage.text}
                   </VuiTypography>
                 </VuiTypography>
+                <VuiTypography variant="subtitle1" fontWeight="bold" color="white">
+                    {title.subText}
+                </VuiTypography>
+
               </VuiBox>
             </Grid>
             {direction === "right" ? (

@@ -26,10 +26,6 @@ export default {
     scrollBehavior: "smooth",
     background: dark.body,
   },
-  body: {
-    background: `url(${bgAdmin})`,
-    backgroundSize: "cover",
-  },
   "*, *::before, *::after": {
     margin: 0,
     padding: 0,

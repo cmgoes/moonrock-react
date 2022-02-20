@@ -70,6 +70,7 @@ function DashboardNavbar({ absolute, light, isMini, connectWalletHandler, connBu
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
+  const accountNo = defaultAccount ? defaultAccount.replace(/(.{5}).*(.{4})/, '$1*****$2') : "";
 
 
 
@@ -125,8 +126,9 @@ function DashboardNavbar({ absolute, light, isMini, connectWalletHandler, connBu
           <VuiBox sx={(theme) => navbarRow(theme, { isMini })}>
            <div>
           <div>	
-            <div style={{ display: 'flex'}}>
-          <div style={{ color: '#FFF',marginRight:"10px"}}>{defaultAccount }</div>      
+            <div style={{ display: 'flex'}}> 
+          <div style={{ color: '#FFF',marginRight:"10px"}}>{accountNo }</div>    
+            
 			        <button className={ (connButtonText=='Disconnect Wallet') ? 'btn btn-success' : 'btn btn-primary' } onClick={connectWalletHandler}>{connButtonText}</button>
               		 </div>                  
           </div>

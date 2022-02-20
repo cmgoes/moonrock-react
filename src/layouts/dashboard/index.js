@@ -70,7 +70,7 @@ function Dashboard() {
   const [tokenName, setTokenName] = useState("Token");
 	const [balance, setBalance] = useState(null);
   const [userBalance,setUserBalance] = useState(0);
-  const [$,set$] = useState("");
+  const [usdBalance,setUsdBalance] = useState("0");
 
 
 	const [provider, setProvider] = useState(null);
@@ -174,17 +174,10 @@ const chainChangedHandler = () => {
 }
 
 
-//listen for account changes
-if (window.ethereum && window.ethereum.isMetaMask) {
-//window.ethereum.on('accountsChanged', accountChangedHandler);
 
-//window.ethereum.on('chainChanged', chainChangedHandler);
-}else{
-  console.log('Need to install MetaMask');
- setErrorMessage('Please install MetaMask browser extension to interact');
-}
 
 const updateEthers = async () => {
+  if (window.ethereum) {
  let tempProvider = new ethers.providers.Web3Provider(window.ethereum);
  setProvider(tempProvider);
 
@@ -194,6 +187,7 @@ const updateEthers = async () => {
  let tempContract = new ethers.Contract(contractAddress, Simpleabi, tempSigner);
  setContract(tempContract);
  
+}
 }
 
 const updateBalance = async () => {
@@ -209,10 +203,10 @@ const updateBalance = async () => {
   if(defaultAccount){
     provider.getBalance(defaultAccount)
     .then(balanceResult => {
-      setUserBalance(parseFloat(ethers.utils.formatEther(balanceResult)).toPrecision(5));
-      console.log(parseFloat(ethers.utils.formatEther(balanceResult)).toPrecision(5));
-      let a = parseFloat(ethers.utils.formatEther(balanceResult)).toPrecision(5)*391;
-      set$(a);
+      let balance = parseFloat(ethers.utils.formatEther(balanceResult)).toPrecision(5);
+      setUserBalance(balance);
+      let a = balance*391;
+      setUsdBalance(a);
       
     })
     };
@@ -261,33 +255,32 @@ useEffect(() => {
         
       <VuiBox py={3}>
         <VuiBox mb={3}>
-       
+        <Grid container spacing={2} className="dashboard-background">
+          <Grid item xs={12} md={9} xl={9}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={4} xl={4}>
               <MiniStatisticsCard
-                title={{ text: "Totale Rock Balance", fontWeight: "regular" }}
+                title={{ text: "Totale Rock Balance", subText: "$"+usdBalance, fontWeight: "regular" }}
                 count={ userBalance }
-                percentage={{ color: "success", text:"$"+ $.toString() }}
                 icon={{ color: "info", component: <IoCash size="22px" color="white" /> }}
               />
             </Grid>
             <Grid item xs={12} md={4} xl={4}>
               <MiniStatisticsCard
-                title={{ text: "Totale reflection ricevute ultime 24h", fontWeight: "regular" }}
+                title={{ text: "Totale reflection ricevute 24h", subText: "$0", fontWeight: "regular" }}
                 count={0}
-                percentage={{ color: "success", text: "+0%" }}
                 icon={{ color: "info", component: <IoCash size="22px" color="white" /> }}
               />
             </Grid>
             <Grid item xs={12} md={4} xl={4}>
               <MiniStatisticsCard
-                title={{ text: "Totale reflection ricevute da primo buy", fontWeight: "regular" }}
+                title={{ text: "Totale reflection da primo buy", subText: "$0", fontWeight: "regular" }}
                 count={0}
-                percentage={{ color: "success", text: "+0%" }}
                 icon={{ color: "info", component: <IoCash size="22px" color="white" /> }}
               />
             </Grid>
-           
+            </Grid>
+            <Grid container spacing={3}>
             <Grid item xs={12} lg={12} xl={12}>
               Details
             </Grid> 
@@ -296,7 +289,6 @@ useEffect(() => {
               <MiniStatisticsCard
                 title={{ text: "Rock Circulating Supply" }}
                 count= {rockcirculating}
-                percentage={{ color: "success", text: count }}
                 icon={{ color: "info", component: <IoCash size="22px" color="white" /> }}
               />
             </Grid>
@@ -304,7 +296,6 @@ useEffect(() => {
               <MiniStatisticsCard
                 title={{ text: "Totale ROCK Burned" }}
                 count={rockBurned}
-                percentage={{ color: "success", text: "+0%" }}
                 icon={{ color: "info", component: <IoCash size="20px" color="white" /> }}
               />
             </Grid>
@@ -340,6 +331,8 @@ useEffect(() => {
                 percentage={{ color: "success", text: "^0" }}
                 icon={{ color: "info", component: <IoCash size="20px" color="white" /> }}
               />
+            </Grid>
+            </Grid>
             </Grid>
             <Grid item xs={12} md={12} xl={12}>
             <LineChart

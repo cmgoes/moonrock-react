@@ -206,7 +206,7 @@ function Sidenav({ color, brandName, routes, ...rest }) {
                 })
               }
             >
-              {/* {brandName} */}
+             {""} 
             </VuiTypography>
           </VuiBox>
         </VuiBox>
