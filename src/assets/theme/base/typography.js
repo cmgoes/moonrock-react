@@ -41,6 +41,7 @@ const baseProperties = {
   fontSizeXXS: pxToRem(10.4),
   fontSizeXS: pxToRem(12),
   fontSizeSM: pxToRem(14),
+  fontSizeMs: pxToRem(16),
   fontSizeRegular: pxToRem(16),
   fontSizeLG: pxToRem(18),
   fontSizeXL: pxToRem(20),
@@ -152,7 +153,7 @@ const typography = {
 
   caption: {
     fontFamily: baseProperties.fontFamily,
-    fontSize: baseProperties.fontSizeXS,
+    fontSize: baseProperties.fontSizeMs,
     fontWeight: baseProperties.fontWeightRegular,
     lineHeight: 1.25,
   },

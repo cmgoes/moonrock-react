@@ -60,6 +60,8 @@ function Dashboard() {
   const { gradients } = colors;
   let contractAddress = '0x4ba8a637c6b36e7890c870ba7dbbd8128dac8b40';
 
+  //let contractAddress = '0x10ed43c718714eb63d5aa57b78b54704e256024e';
+
   //let contractAddress = '0xAE2Ab58699b5A36a2bccA301d2fD88F5E72984b1';
 
 	const [errorMessage, setErrorMessage] = useState(null);
@@ -84,6 +86,8 @@ function Dashboard() {
   const[rockcirculating,setRockcirculating] = useState(0);
   const[rockBurned,setRockBurned] = useState(0);
   const[rockPrice,setRockPrice] = useState(0);
+  const[rockPricePercent,setRockPricePercent] = useState(0);
+  
   const[rockMarketCap,setRockMarketCap] = useState(0);
   const[last24hrsVolume,setLast24hrsVolume] = useState(0);
   const[marketRank,setMarketRank] = useState(0);
@@ -111,9 +115,10 @@ function Dashboard() {
         setRockcirculating(moonRockData.self_reported_circulating_supply);
         setRockBurned(burned);
         setRockPrice(parseFloat(moonRockData.quote.USD.price).toPrecision(5));
+        setRockPricePercent(parseFloat(moonRockData.quote.USD.percent_change_24h).toPrecision(3));
         setRockMarketCap(parseFloat(moonRockData.self_reported_market_cap).toPrecision(10));
         setLast24hrsVolume(parseFloat(moonRockData.quote.USD.volume_24h).toPrecision(8));
-        setVolumeChange24h(moonRockData.quote.USD.volume_change_24h);
+        setVolumeChange24h(parseFloat(moonRockData.quote.USD.volume_change_24h).toPrecision(4));
         setMarketRank(moonRockData.cmc_rank);
           console.log(response);
       
@@ -126,9 +131,10 @@ function Dashboard() {
     setRockcirculating(data.data.ROCK.self_reported_circulating_supply);
     setRockBurned(burned);
     setRockPrice(parseFloat(data.data.ROCK.quote.USD.price).toPrecision(5));
+    setRockPricePercent(parseFloat(data.data.ROCK.quote.USD.percent_change_24h).toPrecision(3));
     setRockMarketCap(parseFloat(data.data.ROCK.self_reported_market_cap).toPrecision(10));
     setLast24hrsVolume(parseFloat(data.data.ROCK.quote.USD.volume_24h).toPrecision(8));
-    setVolumeChange24h(data.data.ROCK.quote.USD.volume_change_24h);
+    setVolumeChange24h(parseFloat(data.data.ROCK.quote.USD.volume_change_24h).toPrecision(4));
     setMarketRank(data.data.ROCK.cmc_rank);
    },[]);
 
@@ -139,7 +145,7 @@ function Dashboard() {
       window.location.reload();
     }
     console.log("logged");
-   if (window.ethereum && window.ethereum.isMetaMask) {
+   if (window.ethereum && window.ethereum.is) {
 
  window.ethereum.request({ method: 'eth_requestAccounts'})
  .then(result => {
@@ -236,6 +242,9 @@ const getCurrentVal = async () => {
 const updateTokenName = async () => {
   setTokenName(await contract.name());
 }
+const getPercentClass = (val) => {
+  return (val>=0) ? 'success' : 'error';
+}
 useEffect(() => {
   if (contract != null) {
     updateBalance();
@@ -262,26 +271,23 @@ useEffect(() => {
               <MiniStatisticsCard
                 title={{ text: "Totale Rock Balance", subText: "$"+usdBalance, fontWeight: "regular" }}
                 count={ userBalance }
-                icon={{ color: "info", component: <IoCash size="22px" color="white" /> }}
               />
             </Grid>
             <Grid item xs={12} md={4} xl={4}>
               <MiniStatisticsCard
                 title={{ text: "Totale reflection ricevute 24h", subText: "$0", fontWeight: "regular" }}
                 count={0}
-                icon={{ color: "info", component: <IoCash size="22px" color="white" /> }}
               />
             </Grid>
             <Grid item xs={12} md={4} xl={4}>
               <MiniStatisticsCard
                 title={{ text: "Totale reflection da primo buy", subText: "$0", fontWeight: "regular" }}
                 count={0}
-                icon={{ color: "info", component: <IoCash size="22px" color="white" /> }}
               />
             </Grid>
             </Grid>
             <Grid container spacing={3}>
-            <Grid item xs={12} lg={12} xl={12}>
+            <Grid item xs={12} lg={12} xl={12} style={{color:"#FFF"}}>
               Details
             </Grid> 
             <Grid item xs={12} md={4} xl={4}>
@@ -289,22 +295,19 @@ useEffect(() => {
               <MiniStatisticsCard
                 title={{ text: "Rock Circulating Supply" }}
                 count= {rockcirculating}
-                icon={{ color: "info", component: <IoCash size="22px" color="white" /> }}
               />
             </Grid>
             <Grid item xs={12} md={4} xl={4}>
               <MiniStatisticsCard
                 title={{ text: "Totale ROCK Burned" }}
                 count={rockBurned}
-                icon={{ color: "info", component: <IoCash size="20px" color="white" /> }}
               />
             </Grid>
             <Grid item xs={12} md={4} xl={4}>
               <MiniStatisticsCard
                 title={{ text: "Rock Price" }}
                 count={rockPrice}
-                percentage={{ color: "error", text: "-0%" }}
-                icon={{ color: "info", component: <IoCash size="22px" color="white" /> }}
+                percentage={{ color: getPercentClass(rockPricePercent), text: rockPricePercent+"%" }}
               />
             </Grid>
             
@@ -312,24 +315,20 @@ useEffect(() => {
               <MiniStatisticsCard
                 title={{ text: "ROCK Market Cap" }}
                 count={'$'+rockMarketCap}
-                percentage={{ color: "success", text: "+0%" }}
-                icon={{ color: "info", component: <IoCash size="20px" color="white" /> }}
+                percentage={{ color: getPercentClass(0), text: "0%" }}
               />
             </Grid>
             <Grid item xs={12} md={4} xl={4}>
               <MiniStatisticsCard
                 title={{ text: "Last 24Hours Volume" }}
                 count={'$'+last24hrsVolume}
-                percentage={{ color: "success", text: volumeChange24h.toString() }}
-                icon={{ color: "info", component: <IoCash size="20px" color="white" /> }}
+                percentage={{ color: getPercentClass(volumeChange24h), text: volumeChange24h+"%" }}
               />
             </Grid>
             <Grid item xs={12} md={4} xl={4}>
               <MiniStatisticsCard
                 title={{ text: "Market Rank" }}
                 count={'#'+marketRank}
-                percentage={{ color: "success", text: "^0" }}
-                icon={{ color: "info", component: <IoCash size="20px" color="white" /> }}
               />
             </Grid>
             </Grid>

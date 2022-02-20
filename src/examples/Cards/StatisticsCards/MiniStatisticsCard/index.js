@@ -37,30 +37,15 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction
       <VuiBox>
         <VuiBox>
           <Grid container alignItems="center">
-            {direction === "left" ? (
-              <Grid item>
-                <VuiBox
-                  bgColor={info}
-                  color="#fff"
-                  width="3rem"
-                  height="3rem"
-                  borderRadius="lg"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  shadow="md"
-                >
-                  {icon.component}
-                </VuiBox>
-              </Grid>
-            ) : null}
-            <Grid item xs={8}>
+            
+            <Grid item xs={12}>
               <VuiBox ml={direction === "left" ? 2 : 0} lineHeight={1}>
                 <VuiTypography
                   variant="caption"
                   color={bgColor === "white" ? "text" : "white"}
                   opacity={bgColor === "white" ? 1 : 0.7}
                   textTransform="capitalize"
+                  fontSize="0.95rem"
                   fontWeight={title.fontWeight}
                 >
                   {title.text}
@@ -77,26 +62,7 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction
 
               </VuiBox>
             </Grid>
-            {direction === "right" ? (
-              <Grid item xs={4}>
-                <VuiBox
-                  bgColor="#0075FF"
-                  color="white"
-                  width="3rem"
-                  height="3rem"
-                  marginLeft="auto"
-                  borderRadius="lg"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  shadow="md"
-                >
-                  <Icon fontSize="small" color="inherit">
-                    {icon.component}
-                  </Icon>
-                </VuiBox>
-              </Grid>
-            ) : null}
+            
           </Grid>
         </VuiBox>
       </VuiBox>
