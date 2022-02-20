@@ -78,7 +78,7 @@ function Dashboard() {
 	const [contract, setContract] = useState(null);
   const [balanceVal, setBalanceVal] = useState(0);
 	const [gasVal, setGasVal] = useState(null);
-  const [moonRockData,setMoonRockData] = useState(null);
+  const [moonRockData,setMoonRockData] = useState({});
   const [count,setCount] = useState(0);
   const[count2,setCount2] =  useState(0);
   const[rockcirculating,setRockcirculating] = useState(0);
@@ -98,26 +98,35 @@ function Dashboard() {
 
   useEffect(() => {    
     const headers = {'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'X-CMC_PRO_API_KEY':'75e00f1a-cfef-40f9-958e-25ef02fb9a95',
-    'Access-Control-Allow-Origin': '*' };
+    'Content-Type': 'application/json'};
 
-    const apiGet =  () => {
-      fetch("https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=ROCK",{headers})
-        .then((response) => {
-        response.set('Access-Control-Allow-Origin', '*');
-        response.json()})
-        .then((json) => {
-          console.log(json);
-         
-         
-        });
+    const apiGet = async () => {
+      const responseData = await fetch("http://46.249.199.38:26497/market-cap/quotes?symbol=ROCK",{headers})
+      .then(response => response.json())
+      .then(response => {
+      
+        setMoonRockData(response.ROCK);
+        let moonRockData = response.ROCK;
+        let burned = parseFloat(moonRockData.total_supply) - parseFloat(moonRockData.self_reported_circulating_supply);
+        setRockcirculating(moonRockData.self_reported_circulating_supply);
+        setRockBurned(burned);
+        setRockPrice(parseFloat(moonRockData.quote.USD.price).toPrecision(5));
+        setRockMarketCap(parseFloat(moonRockData.self_reported_market_cap).toPrecision(10));
+        setLast24hrsVolume(parseFloat(moonRockData.quote.USD.volume_24h).toPrecision(8));
+        setVolumeChange24h(moonRockData.quote.USD.volume_change_24h);
+        setMarketRank(moonRockData.cmc_rank);
+          console.log(response);
+      
+      });
+        //const resJson = await responseData.json();
+        //console.log(resJson);
     };
-    //apiGet();
-    setRockcirculating(data.data.ROCK.total_supply);
-    setRockBurned(data.data.ROCK.circulating_supply);
+    apiGet();
+    let burned = parseFloat(data.data.ROCK.total_supply) - parseFloat(data.data.ROCK.self_reported_circulating_supply);
+    setRockcirculating(data.data.ROCK.self_reported_circulating_supply);
+    setRockBurned(burned);
     setRockPrice(parseFloat(data.data.ROCK.quote.USD.price).toPrecision(5));
-    setRockMarketCap(data.data.ROCK.quote.USD.market_cap);
+    setRockMarketCap(parseFloat(data.data.ROCK.self_reported_market_cap).toPrecision(10));
     setLast24hrsVolume(parseFloat(data.data.ROCK.quote.USD.volume_24h).toPrecision(8));
     setVolumeChange24h(data.data.ROCK.quote.USD.volume_change_24h);
     setMarketRank(data.data.ROCK.cmc_rank);
@@ -167,9 +176,9 @@ const chainChangedHandler = () => {
 
 //listen for account changes
 if (window.ethereum && window.ethereum.isMetaMask) {
-window.ethereum.on('accountsChanged', accountChangedHandler);
+//window.ethereum.on('accountsChanged', accountChangedHandler);
 
-window.ethereum.on('chainChanged', chainChangedHandler);
+//window.ethereum.on('chainChanged', chainChangedHandler);
 }else{
   console.log('Need to install MetaMask');
  setErrorMessage('Please install MetaMask browser extension to interact');
