@@ -108,7 +108,7 @@ export default function App() {
         {layout === "vr"}
         <Switch>
           {getRoutes(routes)}
-          <Redirect from="*" to="/dashboard" />
+          {/* <Redirect from="*" to="/dashboard" /> */}
         </Switch>
       </ThemeProvider>
     </CacheProvider>
@@ -130,7 +130,7 @@ export default function App() {
       {layout === "vr"}
       <Switch>
         {getRoutes(routes)}
-        <Redirect from="*" to="/dashboard" />
+        {/* <Redirect from="*" to="/dashboard" /> */}
       </Switch>
     </ThemeProvider>
   );
