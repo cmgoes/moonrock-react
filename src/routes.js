@@ -77,7 +77,7 @@ const routes = [
   {
     type: "collapse",
     name: "MOONSWAP",
-    key: "moonbridge",
+    key: "moonswap",
     route: "/moonbridge",
     icon: <IoSync size="15px" color="inherit" />,
     component: Moonbridge,
