@@ -3,9 +3,10 @@
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout';
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { components } from 'react-select';
 import Select from 'react-select';
+import VuiButton from "components/VuiButton";
 
 
 // @mui material components
@@ -25,6 +26,10 @@ const Moonbridge = () => {
     const [selectedOption, setSelectedOption] = useState("none");
     const [selectedSecondOption, setSelectedSecondOption] = useState("none");
 
+
+    useEffect(() => {
+      apiGet();
+    }, []);
 
     const IconSingleValue = (props) => (
       <SingleValue {...props}>
@@ -78,17 +83,17 @@ const Moonbridge = () => {
     <VuiBox py={3}>
         <VuiBox mb={3}>
         
-        <Grid container spacing={3}>
+        <Grid container spacing={3} style={{minHeight :'500px'}}>
             <Grid item xs={12} md={12} xl={12}>
             
-            <div className="container">
+            <div className="container" style={{height :'100%'}}>
     <div className="row">
       <div className="col-md-4"></div>
-      <div className="col-md-4">
+      <div className="col-md-4 text-center">
 
-      <button onClick={apiGet}>Fetch API</button>
+      
      
-      <div>
+      <div style={{marginTop:'100px'}}> 
          
     
     <Select
@@ -117,15 +122,8 @@ const Moonbridge = () => {
        
       </div>
        
-        {/* {coinsData.map((techCompany) => (
-
-<option value={techCompany.value}>{techCompany.label}</option>
-
-))} */}
-
-     
        
-
+       <VuiButton size="large" color="primary">Swap</VuiButton>
       </div>
       <div className="col-md-4"></div>
     </div>
