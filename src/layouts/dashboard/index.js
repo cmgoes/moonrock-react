@@ -114,12 +114,14 @@ function Dashboard() {
         setMoonRockData(response.ROCK);
         let moonRockData = response.ROCK;
         let burned = parseFloat(moonRockData.total_supply) - parseFloat(moonRockData.self_reported_circulating_supply);
-        setRockcirculating(moonRockData.self_reported_circulating_supply);
+        const circulating_supply = moonRockData.self_reported_circulating_supply;
+        setRockcirculating(circulating_supply.toString().replace(/.{3}/g, '$&,').replace(/,\s*$/, ""));
         setRockBurned(burned);
-        setRockPrice(parseFloat(moonRockData.quote.USD.price).toPrecision(5));
+        //setRockPrice(parseFloat(moonRockData.quote.USD.price).toPrecision(5));
+        setRockPrice(parseFloat(moonRockData.quote.USD.price).toFixed(2));
         setRockPricePercent(parseFloat(moonRockData.quote.USD.percent_change_24h).toPrecision(3));
-        setRockMarketCap(parseFloat(moonRockData.self_reported_market_cap).toPrecision(10));
-        setLast24hrsVolume(parseFloat(moonRockData.quote.USD.volume_24h).toPrecision(8));
+        setRockMarketCap(parseFloat(moonRockData.self_reported_market_cap).toFixed(2));
+        setLast24hrsVolume(parseFloat(moonRockData.quote.USD.volume_24h).toFixed(2));
         setVolumeChange24h(parseFloat(moonRockData.quote.USD.volume_change_24h).toPrecision(4));
         setMarketRank(moonRockData.cmc_rank);
           console.log(response);
@@ -132,10 +134,10 @@ function Dashboard() {
     let burned = parseFloat(data.data.ROCK.total_supply) - parseFloat(data.data.ROCK.self_reported_circulating_supply);
     setRockcirculating(data.data.ROCK.self_reported_circulating_supply);
     setRockBurned(burned);
-    setRockPrice(parseFloat(data.data.ROCK.quote.USD.price).toPrecision(5));
+    setRockPrice(parseFloat(data.data.ROCK.quote.USD.price).toFixed(2));
     setRockPricePercent(parseFloat(data.data.ROCK.quote.USD.percent_change_24h).toPrecision(3));
-    setRockMarketCap(parseFloat(data.data.ROCK.self_reported_market_cap).toPrecision(10));
-    setLast24hrsVolume(parseFloat(data.data.ROCK.quote.USD.volume_24h).toPrecision(8));
+    setRockMarketCap(parseFloat(data.data.ROCK.self_reported_market_cap).toFixed(2));
+    setLast24hrsVolume(parseFloat(data.data.ROCK.quote.USD.volume_24h).toFixed(2));
     setVolumeChange24h(parseFloat(data.data.ROCK.quote.USD.volume_change_24h).toPrecision(4));
     setMarketRank(data.data.ROCK.cmc_rank);
    },[]);
@@ -252,9 +254,9 @@ const updateBalance = async () => {
 
   let tokenBalance = balanceNumber / Math.pow(10, tokenDecimals);
 
-  setBalance(parseFloat(toFixed(tokenBalance)).toPrecision(8));
+  setBalance(parseFloat(toFixed(tokenBalance)).toFixed(2));
   let usdtoken = tokenBalance * rockPrice;
-  setUsdTokenBalance(parseFloat(usdtoken).toPrecision(6));
+  setUsdTokenBalance(parseFloat(usdtoken).toFixed(2));
   console.log(toFixed(tokenBalance));
   if(defaultAccount){
     provider.getBalance(defaultAccount)

@@ -45,14 +45,17 @@ import Portfolio from "layouts/portfolio";
 import { IoMan } from "react-icons/io5";
 import { IoHome } from "react-icons/io5";
 import { IoSync } from "react-icons/io5";
+import homeIcon from "assets/images/Risorsa 1Ufficiale.svg";
+import portfolioIcon from "assets/images/Risorsa 5Ufficiale.svg";
+import moonbridgeIcon from "assets/images/Risorsa 6Ufficiale.svg";
 
 const routes = [
   {
     type: "collapse",
-    name: "MOONBOARD",
+    name: "CONSOLE",
     key: "dashboard",
     route: "/",
-    icon: <IoHome size="15px" color="inherit" />,
+    icon: <img src={homeIcon}  height="20px" />,
     component: Dashboard,
     noCollapse: true,
   },
@@ -70,7 +73,7 @@ const routes = [
     name: "COMMUNITY TREASURY",
     key: "portfolio",
     route: "/portfolio",
-    icon: <IoMan size="15px" color="inherit" />,
+    icon: <img src={portfolioIcon}  height="20px" />,
     component: Portfolio,
     noCollapse: true,
   },
@@ -79,7 +82,7 @@ const routes = [
     name: "MOONSWAP",
     key: "moonswap",
     route: "/moonbridge",
-    icon: <IoSync size="15px" color="inherit" />,
+    icon: <img src={moonbridgeIcon}  height="20px" />,
     component: Moonbridge,
     noCollapse: true,
   },

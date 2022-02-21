@@ -166,7 +166,7 @@ function Sidenav({ color, brandName, routes, ...rest }) {
             <Icon sx={{ fontWeight: "bold" }}>close</Icon>
           </VuiTypography>
         </VuiBox>
-        <VuiBox component={NavLink} to="/" display="flex" alignItems="center">
+        <VuiBox display="flex" alignItems="center">
           <VuiBox
             sx={
               ((theme) => sidenavLogoLabel(theme, { miniSidenav }),

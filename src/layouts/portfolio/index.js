@@ -41,8 +41,7 @@ function Portfolio() {
         <VuiBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12} xl={12} style={{minHeight:"500px"}}>
-            <script
-    src="https://static.coinstats.app/widgets/coin-chart-widget.js"></script>
+           
             <coin-stats-portfolio-widget locale="en" currency="USD" bg-color="none" status-up-color="#74D492"
 status-down-color="#FE4747" text-color="#FFFFFF" border-color="rgba(255,255,255,0.15)"
 widgetType="large" coins-count="20" font="Montserrat" link="Tk1Ezm"

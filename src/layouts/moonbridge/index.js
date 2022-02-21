@@ -96,26 +96,7 @@ const Moonbridge = () => {
       <div style={{marginTop:'100px'}}> 
          
     
-    <Select
-        width = '60px'
-        styles={customStyles}
-        onChange={handleTypeSelect}
-        components={{SingleValue:IconSingleValue,Option: IconOption}}
-        options={coinsData.coins}  
-        value={coinsData.coins.filter(function(option) {
-          return option.price === selectedOption;
-        })}
-         />
-<br></br>
-             
-          
-        <Select
-        styles={customStyles}
-        components={{SingleValue:IconSingleValue,Option: IconOption}}
-        options={coinsData.coins}   />
-          <br></br>
-          
-         
+  <h3 style={{color:'#FFF'}}>COMING SOON</h3>
          
          
           
@@ -123,7 +104,6 @@ const Moonbridge = () => {
       </div>
        
        
-       <VuiButton size="large" color="primary">Swap</VuiButton>
       </div>
       <div className="col-md-4"></div>
     </div>
