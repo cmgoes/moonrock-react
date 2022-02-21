@@ -48,16 +48,8 @@ function SidenavCollapse({ color, icon, name, children, active, noCollapse, open
     <>
       <ListItem component="li">
         <VuiBox {...rest} sx={(theme) => collapseItem(theme, { active, transparentSidenav })}>
-          <ListItemIcon
-            sx={(theme) => collapseIconBox(theme, { active, transparentSidenav, color })}
-          >
-            {typeof icon === "string" ? (
-              <Icon sx={(theme) => collapseIcon(theme, { active })}>{icon}</Icon>
-            ) : (
-              icon
-            )}
-          </ListItemIcon>
-
+          
+          <div style={{padding:"13px"}}></div>
           <ListItemText
             primary={name}
             sx={(theme) => collapseText(theme, { miniSidenav, transparentSidenav, active })}

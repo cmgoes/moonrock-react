@@ -95,7 +95,16 @@ function Dashboard() {
   const[marketRank,setMarketRank] = useState(0);
   const[volumeChange24h,setVolumeChange24h]= useState(0);
   
-  
+  // Create our number formatter.
+var formatter1 = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+});
+
+var formatter2 = new Intl.NumberFormat('en-US', {
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0
+});
 
   const headers = {'Accept': 'application/json',
   'Content-Type': 'application/json',
@@ -115,13 +124,13 @@ function Dashboard() {
         let moonRockData = response.ROCK;
         let burned = parseFloat(moonRockData.total_supply) - parseFloat(moonRockData.self_reported_circulating_supply);
         const circulating_supply = moonRockData.self_reported_circulating_supply;
-        setRockcirculating(circulating_supply.toString().replace(/.{3}/g, '$&,').replace(/,\s*$/, ""));
-        setRockBurned(burned);
+        setRockcirculating(formatter2.format(circulating_supply));
+        setRockBurned(formatter2.format(burned));
         //setRockPrice(parseFloat(moonRockData.quote.USD.price).toPrecision(5));
-        setRockPrice(parseFloat(moonRockData.quote.USD.price).toFixed(2));
+        setRockPrice(parseFloat(moonRockData.quote.USD.price).toFixed(7));
         setRockPricePercent(parseFloat(moonRockData.quote.USD.percent_change_24h).toPrecision(3));
-        setRockMarketCap(parseFloat(moonRockData.self_reported_market_cap).toFixed(2));
-        setLast24hrsVolume(parseFloat(moonRockData.quote.USD.volume_24h).toFixed(2));
+        setRockMarketCap(formatter1.format(moonRockData.self_reported_market_cap));
+        setLast24hrsVolume(formatter1.format(moonRockData.quote.USD.volume_24h));
         setVolumeChange24h(parseFloat(moonRockData.quote.USD.volume_change_24h).toPrecision(4));
         setMarketRank(moonRockData.cmc_rank);
           console.log(response);
@@ -132,12 +141,12 @@ function Dashboard() {
     };
     apiGet();
     let burned = parseFloat(data.data.ROCK.total_supply) - parseFloat(data.data.ROCK.self_reported_circulating_supply);
-    setRockcirculating(data.data.ROCK.self_reported_circulating_supply);
-    setRockBurned(burned);
+    setRockcirculating(formatter2.format(data.data.ROCK.self_reported_circulating_supply));
+    setRockBurned(formatter2.format(burned));
     setRockPrice(parseFloat(data.data.ROCK.quote.USD.price).toFixed(2));
     setRockPricePercent(parseFloat(data.data.ROCK.quote.USD.percent_change_24h).toPrecision(3));
-    setRockMarketCap(parseFloat(data.data.ROCK.self_reported_market_cap).toFixed(2));
-    setLast24hrsVolume(parseFloat(data.data.ROCK.quote.USD.volume_24h).toFixed(2));
+    setRockMarketCap(formatter1.format(data.data.ROCK.self_reported_market_cap));
+    setLast24hrsVolume(formatter1.format(data.data.ROCK.quote.USD.volume_24h));
     setVolumeChange24h(parseFloat(data.data.ROCK.quote.USD.volume_change_24h).toPrecision(4));
     setMarketRank(data.data.ROCK.cmc_rank);
    },[]);
@@ -254,17 +263,17 @@ const updateBalance = async () => {
 
   let tokenBalance = balanceNumber / Math.pow(10, tokenDecimals);
 
-  setBalance(parseFloat(toFixed(tokenBalance)).toFixed(2));
+  setBalance(formatter1.format(toFixed(tokenBalance)));
   let usdtoken = tokenBalance * rockPrice;
-  setUsdTokenBalance(parseFloat(usdtoken).toFixed(2));
+  setUsdTokenBalance(formatter1.format(usdtoken));
   console.log(toFixed(tokenBalance));
   if(defaultAccount){
     provider.getBalance(defaultAccount)
     .then(balanceResult => {
-      let balance = parseFloat(ethers.utils.formatEther(balanceResult)).toPrecision(5);
+      let balance = formatter1.format(ethers.utils.formatEther(balanceResult));
       setUserBalance(balance);
       let a = balance*391;
-      setUsdBalance(a);
+      setUsdBalance(formatter1.format(a));
       
     })
     };
@@ -333,7 +342,7 @@ useEffect(() => {
             </Grid>
             <Grid item xs={12} md={4} xl={4}>
               <MiniStatisticsCard
-                title={{ text: "Reflection Since 1st Buy", subText: "$0", fontWeight: "regular" }}
+                title={{ text: "Reflections Since First Buy", subText: "$0", fontWeight: "regular" }}
                 count={0}
               />
             </Grid>

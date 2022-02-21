@@ -24,6 +24,18 @@ body {
   right: -19%;
   top: 13%;
 }
+coin-stats-portfolio-widget > div:nth-child(1) > table:nth-child(2) >
+tbody:nth-child(1) > tr:nth-child(16) {
+display: none;
+} 
+coin-stats-portfolio-widget > div:nth-child(1) > table:nth-child(2) >
+tbody:nth-child(1) > tr:nth-child(15) {
+display: none;
+}
+
+coin-stats-portfolio-widget > div:nth-child(1) > div:nth-child(3) {
+display: none;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

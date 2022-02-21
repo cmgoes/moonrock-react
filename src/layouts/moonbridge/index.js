@@ -7,6 +7,7 @@ import React, { useState,useEffect } from 'react';
 import { components } from 'react-select';
 import Select from 'react-select';
 import VuiButton from "components/VuiButton";
+import moonbridgeIcon from "assets/images/Picture3.png";
 
 
 // @mui material components
@@ -96,11 +97,8 @@ const Moonbridge = () => {
       <div style={{marginTop:'100px'}}> 
          
     
-  <h3 style={{color:'#FFF'}}>COMING SOON</h3>
+      <img src={moonbridgeIcon}  height="100px" />
          
-         
-          
-       
       </div>
        
        
