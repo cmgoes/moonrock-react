@@ -64,7 +64,7 @@ import {
 import team2 from "assets/images/team-2.jpg";
 import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 
-function DashboardNavbar({ absolute, light, isMini, connectWalletHandler, connButtonText,defaultAccount}) {
+function DashboardNavbar({ absolute, light, isMini, connectWalletHandler,connectbncWalletHandler, connButtonText,connBNCButtonText,defaultAccount}) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useVisionUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;
@@ -128,9 +128,13 @@ function DashboardNavbar({ absolute, light, isMini, connectWalletHandler, connBu
           <div>	
             <div style={{ display: 'flex'}}> 
           <div style={{ color: '#FFF',marginRight:"10px"}}>{accountNo }</div>    
-            
-			        <button className={ (connButtonText=='Disconnect Wallet') ? 'btn btn-success' : 'btn btn-primary' } onClick={connectWalletHandler}>{connButtonText}</button>
-              		 </div>                  
+            {(connBNCButtonText=='Disconnect Wallet') ? 
+			        '' : <button style={{ marginRight:"10px"}} className={ (connButtonText=='Disconnect Wallet') ? 'btn btn-success' : 'btn btn-primary' } onClick={connectWalletHandler}>{connButtonText}</button>
+             }
+              {(connButtonText=='Disconnect Wallet') ? 
+             '': <button className={ (connBNCButtonText=='Disconnect Wallet') ? 'btn btn-success' : 'btn btn-primary' } onClick={connectbncWalletHandler}>{connBNCButtonText}</button>	 
+              }
+             </div>                  
           </div>
         </div>
             {/* <VuiBox pr={1}>

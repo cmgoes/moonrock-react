@@ -66,7 +66,8 @@ function Dashboard() {
 
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [defaultAccount, setDefaultAccount] = useState(null);
-	const [connButtonText, setConnButtonText] = useState('Connect Wallet');
+	const [connButtonText, setConnButtonText] = useState('Connect MetaMask');
+  const [connBNCButtonText, setConnBNCButtonText] = useState('Connect Binance');
 
 	const [currentContractVal, setCurrentContractVal] = useState(null);
   const [tokenName, setTokenName] = useState("Token");
@@ -139,7 +140,32 @@ function Dashboard() {
     setMarketRank(data.data.ROCK.cmc_rank);
    },[]);
 
-  
+   const connectbncWalletHandler = () =>{
+    if(connBNCButtonText==='Disconnect Wallet'){
+      window.location.reload();
+    }
+    if (window.BinanceChain) {
+
+      window.BinanceChain.request({method: "eth_accounts"})
+     
+      .then(result => {
+        accountBNCChangedHandler(result[0]);
+        setConnBNCButtonText('Disconnect Wallet');
+        
+        
+         
+      })
+      .catch(error => {
+        setErrorMessage(error.message);
+      
+      });
+     
+     } else {
+      console.log('Need to install binance chain');
+      setErrorMessage('Please install binance chain browser extension to interact');
+     }
+     
+   }
   const connectWalletHandler = () => {
 
     if(connButtonText==='Disconnect Wallet'){
@@ -147,6 +173,7 @@ function Dashboard() {
     }
     console.log("logged");
     console.log(window.ethereum);
+    console.log(window.BinanceChain);
    if (window.ethereum && window.ethereum.isMetaMask) {
 
  window.ethereum.request({ method: 'eth_requestAccounts'})
@@ -176,11 +203,29 @@ const accountChangedHandler = (newAccount) => {
  updateEthers();
 }
 
+const accountBNCChangedHandler = (newAccount) => {
+  setDefaultAccount(newAccount);
+  updateBNC();
+ }
+
 const chainChangedHandler = () => {
  // reload the page to avoid any errors with chain change mid use of application
  window.location.reload();
 }
 
+const updateBNC = async () => {
+  if (window.BinanceChain) {
+ let tempProvider = new ethers.providers.Web3Provider(window.BinanceChain);
+ setProvider(tempProvider);
+
+ let tempSigner = tempProvider.getSigner();
+ setSigner(tempSigner);
+
+ let tempContract = new ethers.Contract(contractAddress, Simpleabi, tempSigner);
+ setContract(tempContract);
+ 
+}
+}
 
 
 
@@ -263,9 +308,9 @@ useEffect(() => {
   return (
     
     <DashboardLayout>
-      <DashboardNavbar connectWalletHandler={connectWalletHandler} connButtonText={connButtonText} defaultAccount={defaultAccount} />
+      <DashboardNavbar connectWalletHandler={connectWalletHandler} connectbncWalletHandler={connectbncWalletHandler} connButtonText={connButtonText} connBNCButtonText={connBNCButtonText} defaultAccount={defaultAccount} />
     {errorMessage}
-        
+    
       <VuiBox py={3}>
         <VuiBox mb={3}>
         <Grid container spacing={2} className="dashboard-background">
