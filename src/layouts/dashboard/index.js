@@ -58,11 +58,11 @@ import { IoCash } from "react-icons/io5";
 
 function Dashboard() {
   const { gradients } = colors;
-  //let contractAddress = '0x4ba8a637c6b36e7890c870ba7dbbd8128dac8b40';
+  let contractAddress = '0x4ba8a637c6b36e7890c870ba7dbbd8128dac8b40';
 
   //let contractAddress = '0x10ed43c718714eb63d5aa57b78b54704e256024e';
 
-  let contractAddress = '0xAE2Ab58699b5A36a2bccA301d2fD88F5E72984b1';
+  //let contractAddress = '0xAE2Ab58699b5A36a2bccA301d2fD88F5E72984b1';
 
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [defaultAccount, setDefaultAccount] = useState(null);
