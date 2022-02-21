@@ -252,9 +252,9 @@ const updateBalance = async () => {
 
   let tokenBalance = balanceNumber / Math.pow(10, tokenDecimals);
 
-  setBalance(toFixed(tokenBalance));
+  setBalance(parseFloat(toFixed(tokenBalance)).toPrecision(8));
   let usdtoken = tokenBalance * rockPrice;
-  setUsdTokenBalance(usdtoken);
+  setUsdTokenBalance(parseFloat(usdtoken).toPrecision(6));
   console.log(toFixed(tokenBalance));
   if(defaultAccount){
     provider.getBalance(defaultAccount)
