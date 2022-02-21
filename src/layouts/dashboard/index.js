@@ -71,7 +71,7 @@ function Dashboard() {
 
 	const [currentContractVal, setCurrentContractVal] = useState(null);
   const [tokenName, setTokenName] = useState("Token");
-	const [balance, setBalance] = useState(null);
+	const [balance, setBalance] = useState(0);
   const [usdTokenBalance,setUsdTokenBalance] = useState("0");
   const [userBalance,setUserBalance] = useState(0);
   const [usdBalance,setUsdBalance] = useState("0");
@@ -143,6 +143,7 @@ function Dashboard() {
    const connectbncWalletHandler = () =>{
     if(connBNCButtonText==='Disconnect Wallet'){
       window.location.reload();
+      
     }
     if (window.BinanceChain) {
 
@@ -173,7 +174,7 @@ function Dashboard() {
     }
     console.log("logged");
     console.log(window.ethereum);
-    console.log(window.BinanceChain);
+    
    if (window.ethereum && window.ethereum.isMetaMask) {
 
  window.ethereum.request({ method: 'eth_requestAccounts'})
@@ -309,7 +310,7 @@ useEffect(() => {
     
     <DashboardLayout>
       <DashboardNavbar connectWalletHandler={connectWalletHandler} connectbncWalletHandler={connectbncWalletHandler} connButtonText={connButtonText} connBNCButtonText={connBNCButtonText} defaultAccount={defaultAccount} />
-    {errorMessage}
+      <div style={{ color: '#FFF'}}>{errorMessage}</div> 
     
       <VuiBox py={3}>
         <VuiBox mb={3}>
@@ -383,10 +384,13 @@ useEffect(() => {
             </Grid>
             </Grid>
             <Grid item xs={12} md={12} xl={12}>
-            <LineChart
-                      lineChartData={lineChartDataDashboard}
-                      lineChartOptions={lineChartOptionsDashboard}
-                    />
+            <coin-stats-chart-widget type="large" coin-id="moonrock" width="650" chart-height="300"
+currency="USD" locale="en" bg-color="none" status-up-color="#74D492" status-down-color="#FE4747"
+bg-color="none" text-color="#FFFFFF" buttons-color="#1C1B1B" chart-color="#FFA959"
+chart-gradient-from="rgba(255,255,255,0.07)" chart-gradient-to="rgba(0,0,0,0)"
+border-color="rgba(255,255,255,0.15)" btc-color="#6DD400" eth-color="#67B5FF"
+chart-label-background="#000000" font="Montserrat"
+candle-grids-color="rgba(255,255,255,0.1)"></coin-stats-chart-widget>
             </Grid>
           </Grid>
         </VuiBox>

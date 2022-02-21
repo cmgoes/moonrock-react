@@ -30,16 +30,15 @@ function Portfolio() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
+      <coin-stats-portfolio-widget locale="en" currency="USD" bg-color="none" status-up-color="#74D492"
+status-down-color="#FE4747" text-color="#FFFFFF" border-color="rgba(255,255,255,0.15)"
+widgetType="large" coins-count="20" font="Montserrat" link="Tk1Ezm"
+rotate-button-color="rgba(28,27,27,0.35)" width="486"></coin-stats-portfolio-widget>
       <VuiBox py={3}>
         <VuiBox mb={3}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6} xl={3}>
-              <MiniStatisticsCard
-                title={{ text: "Valore totale del portafoglio", fontWeight: "regular" }}
-                count="$0"
-                percentage={{ color: "success", text: "0%" }}
-                icon={{ color: "info", component: <IoCash size="22px" color="white" /> }}
-              />
+            <Grid item xs={12} md={12} xl={12}>
+           
             </Grid>
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
