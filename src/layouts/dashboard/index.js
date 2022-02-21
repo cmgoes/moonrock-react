@@ -319,19 +319,19 @@ useEffect(() => {
           <Grid container spacing={3}>
             <Grid item xs={12} md={4} xl={4}>
               <MiniStatisticsCard
-                title={{ text: "Totale Rock Balance", subText: "$"+usdTokenBalance, fontWeight: "regular" }}
+                title={{ text: "Total  $Rock Balance", subText: "$"+usdTokenBalance, fontWeight: "regular" }}
                 count={ balance }
               />
             </Grid>
             <Grid item xs={12} md={4} xl={4}>
               <MiniStatisticsCard
-                title={{ text: "Totale reflection ricevute 24h", subText: "$0", fontWeight: "regular" }}
+                title={{ text: "Last 24H Reflections", subText: "$0", fontWeight: "regular" }}
                 count={0}
               />
             </Grid>
             <Grid item xs={12} md={4} xl={4}>
               <MiniStatisticsCard
-                title={{ text: "Totale reflection da primo buy", subText: "$0", fontWeight: "regular" }}
+                title={{ text: "Reflection Since 1st Buy", subText: "$0", fontWeight: "regular" }}
                 count={0}
               />
             </Grid>
