@@ -383,8 +383,8 @@ useEffect(() => {
             </Grid>
             </Grid>
             </Grid>
-            <Grid item xs={12} md={12} xl={12}>
-            <coin-stats-chart-widget type="large" coin-id="moonrock" width="650" chart-height="300"
+            <Grid item xs={12} md={12} xl={12} style={{height:"420px"}}>
+            <coin-stats-chart-widget type="large" coin-id="moonrock" width="100%" chart-height="150"
 currency="USD" locale="en" bg-color="none" status-up-color="#74D492" status-down-color="#FE4747"
 bg-color="none" text-color="#FFFFFF" buttons-color="#1C1B1B" chart-color="#FFA959"
 chart-gradient-from="rgba(255,255,255,0.07)" chart-gradient-to="rgba(0,0,0,0)"

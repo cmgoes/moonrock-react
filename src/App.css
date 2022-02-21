@@ -21,8 +21,8 @@ body {
   background-repeat: no-repeat;
   background-size: 53%;
   transform: rotate(90deg);
-  right: -27%;
-  top: 39%;
+  right: -19%;
+  top: 13%;
 }
 
 @media (prefers-reduced-motion: no-preference) {

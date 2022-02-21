@@ -29,7 +29,7 @@ import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import colors from "assets/theme/base/colors";
 
-function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction }) {
+function MiniStatisticsCard({ bgColor, title, count, percentage, direction }) {
   const { info } = colors;
 
   return (
@@ -116,8 +116,8 @@ MiniStatisticsCard.propTypes = {
   }),
   icon: PropTypes.shape({
     color: PropTypes.oneOf(["primary", "secondary", "info", "success", "warning", "error", "dark"]),
-    component: PropTypes.node.isRequired,
-  }).isRequired,
+    component: PropTypes.node,
+  }),
   direction: PropTypes.oneOf(["right", "left"]),
 };
 
