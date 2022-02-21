@@ -128,12 +128,14 @@ function DashboardNavbar({ absolute, light, isMini, connectWalletHandler,connect
           <div>	
             <div style={{ display: 'flex'}}> 
           <div style={{ color: '#FFF',marginRight:"10px"}}>{accountNo }</div>    
-            {(connBNCButtonText=='Disconnect Wallet') ? 
+            {/* {(connBNCButtonText=='Disconnect Wallet') ? 
 			        '' : <button style={{ marginRight:"10px"}} className={ (connButtonText=='Disconnect Wallet') ? 'btn btn-success' : 'btn btn-primary' } onClick={connectWalletHandler}>{connButtonText}</button>
-             }
-              {(connButtonText=='Disconnect Wallet') ? 
+             } */}
+
+<button style={{ marginRight:"10px"}} className={ (connButtonText=='Disconnect Wallet') ? 'btn btn-success' : 'btn btn-primary' } onClick={connectWalletHandler}>{connButtonText}</button>
+              {/* {(connButtonText=='Disconnect Wallet') ? 
              '': <button className={ (connBNCButtonText=='Disconnect Wallet') ? 'btn btn-success' : 'btn btn-primary' } onClick={connectbncWalletHandler}>{connBNCButtonText}</button>	 
-              }
+              } */}
              </div>                  
           </div>
         </div>

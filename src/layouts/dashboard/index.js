@@ -66,7 +66,7 @@ function Dashboard() {
 
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [defaultAccount, setDefaultAccount] = useState(null);
-	const [connButtonText, setConnButtonText] = useState('Connect MetaMask');
+	const [connButtonText, setConnButtonText] = useState('Connect Wallet');
   const [connBNCButtonText, setConnBNCButtonText] = useState('Connect Binance');
 
 	const [currentContractVal, setCurrentContractVal] = useState(null);
@@ -319,8 +319,8 @@ useEffect(() => {
           <Grid container spacing={3}>
             <Grid item xs={12} md={4} xl={4}>
               <MiniStatisticsCard
-                title={{ text: "Total  $Rock Balance", subText: "$"+usdTokenBalance, fontWeight: "regular" }}
-                count={ balance }
+                title={{ text: "Total Balance", subText: "$"+usdTokenBalance +" USD", fontWeight: "regular" }}
+                count={ balance +" ROCK" }
               />
             </Grid>
             <Grid item xs={12} md={4} xl={4}>
@@ -335,11 +335,8 @@ useEffect(() => {
                 count={0}
               />
             </Grid>
-            </Grid>
-            <Grid container spacing={3}>
-            <Grid item xs={12} lg={12} xl={12} style={{color:"#FFF"}}>
-              Details
-            </Grid> 
+           
+           
             <Grid item xs={12} md={4} xl={4}>
             
               <MiniStatisticsCard
@@ -357,7 +354,7 @@ useEffect(() => {
               <MiniStatisticsCard
                 title={{ text: "Rock Price" }}
                 count={rockPrice}
-                percentage={{ color: getPercentClass(rockPricePercent), text: rockPricePercent+"%" }}
+                
               />
             </Grid>
             
@@ -365,14 +362,14 @@ useEffect(() => {
               <MiniStatisticsCard
                 title={{ text: "ROCK Market Cap" }}
                 count={'$'+rockMarketCap}
-                percentage={{ color: getPercentClass(0), text: "0%" }}
+                
               />
             </Grid>
             <Grid item xs={12} md={4} xl={4}>
               <MiniStatisticsCard
                 title={{ text: "Last 24Hours Volume" }}
                 count={'$'+last24hrsVolume}
-                percentage={{ color: getPercentClass(volumeChange24h), text: volumeChange24h+"%" }}
+                
               />
             </Grid>
             <Grid item xs={12} md={4} xl={4}>
