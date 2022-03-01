@@ -24,7 +24,7 @@ import PropTypes from "prop-types";
 
 // @mui material components
 import { Breadcrumbs as MuiBreadcrumbs } from "@mui/material";
-import Icon from "@mui/material/Icon";
+// import Icon from "@mui/material/Icon";
 
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
@@ -42,7 +42,7 @@ function Breadcrumbs({ icon, title, route, light }) {
           },
         }}
       >
-        <Link to="/">
+        {/* <Link to="/">
           <VuiTypography
             component="span"
             variant="body2"
@@ -52,7 +52,7 @@ function Breadcrumbs({ icon, title, route, light }) {
           >
             <Icon>{icon}</Icon>
           </VuiTypography>
-        </Link>
+        </Link> */}
         {routes.map((el) => (
           <Link to={`/${el}`} key={el}>
             <VuiTypography
@@ -68,7 +68,7 @@ function Breadcrumbs({ icon, title, route, light }) {
             </VuiTypography>
           </Link>
         ))}
-        <VuiTypography
+        {/* <VuiTypography
           variant="button"
           fontWeight="regular"
           textTransform="capitalize"
@@ -76,7 +76,7 @@ function Breadcrumbs({ icon, title, route, light }) {
           sx={{ lineHeight: 0 }}
         >
           {title.replace("-", " ")}
-        </VuiTypography>
+        </VuiTypography> */}
       </MuiBreadcrumbs>
       <VuiTypography
         fontWeight="bold"
@@ -85,7 +85,7 @@ function Breadcrumbs({ icon, title, route, light }) {
         color={light ? "white" : "dark"}
         noWrap
       >
-        {title.replace("-", " ")}
+        {title ? title.replace("-", " ") : 'Console'}
       </VuiTypography>
     </VuiBox>
   );

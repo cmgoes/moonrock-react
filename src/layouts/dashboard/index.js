@@ -135,8 +135,8 @@ function Dashboard() {
           const marketCap = tokenPrice * circulatingSupply
           setRockMarketCap(formatter1.format(marketCap));
           // const liquidity = 2 * lockbalanceOfLP * tokenPrice
-          setLast24hrsVolume(res.data[0].total_volume);
-          setMarketRank(5791)
+          setLast24hrsVolume(formatter2.format(res.data[0].total_volume));
+          setMarketRank(formatter2.format(5791));
         })
     }
     testapi()
@@ -279,7 +279,7 @@ function Dashboard() {
                 <Grid item xs={12} md={4} xl={4}>
                 
                   <MiniStatisticsCard
-                    title={{ text: "$ROCK Circulating Supply" }}
+                    title={{ text: "$ROCK Total Supply" }}
                     count= {rockcirculating}
                   />
                 </Grid>
@@ -323,7 +323,7 @@ function Dashboard() {
               <coin-stats-chart-widget type="large" coin-id="moonrock" width="100%" chart-height="250"
                 currency="USD" locale="en" bg-color="rgba(6, 11, 40, 0.67)" status-up-color="#74D492" status-down-color="#FE4747"
                 text-color="#FFFFFF" buttons-color="6, 15, 48, 0.97" chart-color="#FFA959"
-                chart-gradient-from="rgba(255,255,255,0.07)" chart-gradient-to="rgba(0,0,0,0)"
+                chart-gradient-from="rgba(0,0,0,0)" chart-gradient-to="rgba(0,0,0,0)"
                 border-color="rgba(255,255,255,0.15)" btc-color="#6DD400" eth-color="#67B5FF"
                 chart-label-background="#000000" font="Montserrat"
                 candle-grids-color="rgba(255,255,255,0.1)"
