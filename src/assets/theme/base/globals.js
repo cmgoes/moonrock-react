@@ -18,10 +18,9 @@
 
 // Vision UI Dashboard React Base Styles
 import colors from "assets/theme/base/colors";
-import bgAdmin from "assets/images/body-background.png";
 
 const { info, dark } = colors;
-export default {
+const globals = {
   html: {
     scrollBehavior: "smooth",
     background: dark.body,
@@ -41,3 +40,5 @@ export default {
     color: `${info.main} !important`,
   },
 };
+
+export default globals;

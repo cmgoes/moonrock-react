@@ -28,7 +28,7 @@ const { white, text, info, secondary } = colors;
 const { size } = typography;
 const { buttonBoxShadow } = boxShadows;
 
-export default {
+const contained = {
   base: {
     backgroundColor: white.main,
     minHeight: pxToRem(40),
@@ -105,3 +105,5 @@ export default {
     },
   },
 };
+
+export default contained;

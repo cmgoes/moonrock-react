@@ -26,7 +26,7 @@ import pxToRem from "assets/theme/functions/pxToRem";
 const { size, fontWeightRegular } = typography;
 const { grey, dark, text } = colors;
 
-export default {
+const stepLabel = {
   styleOverrides: {
     label: {
       marginTop: `${pxToRem(8)} !important`,
@@ -46,3 +46,5 @@ export default {
     },
   },
 };
+
+export default stepLabel;

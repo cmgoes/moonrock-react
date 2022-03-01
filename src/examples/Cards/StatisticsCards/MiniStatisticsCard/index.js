@@ -22,15 +22,15 @@ import PropTypes from "prop-types";
 // @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-import Icon from "@mui/material/Icon";
+// import Icon from "@mui/material/Icon";
 
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
-import colors from "assets/theme/base/colors";
+// import colors from "assets/theme/base/colors";
 
 function MiniStatisticsCard({ bgColor, title, count, percentage, direction }) {
-  const { info } = colors;
+  // const { info } = colors;
 
   return (
     <Card sx={{ padding: "17px" }}>

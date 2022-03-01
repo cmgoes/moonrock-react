@@ -26,7 +26,7 @@ import colors from "assets/theme/base/colors";
 const { size } = typography;
 const { text } = colors;
 
-export default {
+const dialogContentText = {
   styleOverrides: {
     root: {
       fontSize: size.md,
@@ -34,3 +34,5 @@ export default {
     },
   },
 };
+
+export default dialogContentText;

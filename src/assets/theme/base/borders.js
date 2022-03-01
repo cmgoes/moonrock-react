@@ -30,7 +30,7 @@ import pxToRem from "assets/theme/functions/pxToRem";
 
 const { borderCol } = colors;
 
-export default {
+const borders = {
   borderColor: {
     grey: { borderCol },
     white: "rgba(226, 232, 240, 0.3)",
@@ -56,4 +56,6 @@ export default {
     form: pxToRem(24),
     section: pxToRem(160),
   },
-};
+}
+
+export default borders;

@@ -28,7 +28,7 @@ const { transparent } = colors;
 const { lg } = boxShadows;
 const { borderRadius } = borders;
 
-export default {
+const popover = {
   styleOverrides: {
     paper: {
       backgroundColor: transparent.main,
@@ -38,3 +38,5 @@ export default {
     },
   },
 };
+
+export default popover;

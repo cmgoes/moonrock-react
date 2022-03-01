@@ -16,7 +16,7 @@
 
 */
 
-export default {
+const list = {
   styleOverrides: {
     padding: {
       paddingTop: 0,
@@ -24,3 +24,5 @@ export default {
     },
   },
 };
+
+export default list;

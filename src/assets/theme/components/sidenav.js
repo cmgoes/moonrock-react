@@ -27,7 +27,7 @@ import pxToRem from "assets/theme/functions/pxToRem";
 const { white } = colors;
 const { borderRadius } = borders;
 
-export default {
+const sidenav = {
   styleOverrides: {
     root: {
       width: pxToRem(250),
@@ -50,3 +50,5 @@ export default {
     },
   },
 };
+
+export default sidenav;

@@ -28,7 +28,7 @@ const { dark, white, grey, inputColors } = colors;
 const { size, fontWeightRegular } = typography;
 const { borderWidth, borderRadius } = borders;
 
-export default {
+const inputBase = {
   styleOverrides: {
     root: {
       display: "grid !important",
@@ -59,3 +59,5 @@ export default {
     },
   },
 };
+
+export default inputBase;

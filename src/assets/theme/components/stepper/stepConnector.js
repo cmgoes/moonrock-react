@@ -23,7 +23,7 @@ import colors from "assets/theme/base/colors";
 const { dark } = colors;
 const { borderWidth, borderColor } = borders;
 
-export default {
+const stepConnector = {
   styleOverrides: {
     root: {
       color: borderColor,
@@ -50,3 +50,5 @@ export default {
     },
   },
 };
+
+export default stepConnector;

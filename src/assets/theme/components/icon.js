@@ -19,7 +19,7 @@
 // Vision UI Dashboard React helper functions
 import pxToRem from "assets/theme/functions/pxToRem";
 
-export default {
+const icon = {
   defaultProps: {
     baseClassName: "material-icons-round",
     fontSize: "inherit",
@@ -39,3 +39,5 @@ export default {
     },
   },
 };
+
+export default icon;

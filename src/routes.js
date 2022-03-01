@@ -37,14 +37,7 @@
 import Dashboard from "layouts/dashboard";
 import Moonbridge from "layouts/moonbridge";
 import Portfolio from "layouts/portfolio";
-// import SignIn from "layouts/authentication/sign-in";
-// import SignUp from "layouts/authentication/sign-up";
-
-// Vision UI Dashboard React icons
-
-import { IoMan } from "react-icons/io5";
-import { IoHome } from "react-icons/io5";
-import { IoSync } from "react-icons/io5";
+import Stepper from "layouts/stepper";
 
 import homeIcon from "assets/images/Risorsa 6Ufficiale.svg";
 import portfolioIcon from "assets/images/Risorsa 5Ufficiale.svg";
@@ -56,91 +49,35 @@ const routes = [
     name: "CONSOLE",
     key: "",
     route: "/",
-    icon: <img src={homeIcon}  height="20px" />,
+    icon: <img src={homeIcon}  height="20px" alt=""/>,
     component: Dashboard,
     noCollapse: true,
-  },
-  // {
-  //   type: "collapse",
-  //   name: "MOONBOARD",
-  //   key: "dashboard",
-  //   route: "/dashboard",
-  //   icon: <IoHome size="15px" color="inherit" />,
-  //   component: Dashboard,
-  //   noCollapse: true,
-  // },
+  }, 
   {
     type: "collapse",
     name: "COMMUNITY TREASURY",
     key: "portfolio",
     route: "/portfolio",
-    icon: <img src={portfolioIcon}  height="20px" />,
+    icon: <img src={portfolioIcon}  height="20px" alt=""/>,
     component: Portfolio,
     noCollapse: true,
   },
   {
     type: "collapse",
-    name: "MOONSWAP",
+    name: "ROCKSWAP",
     key: "moonbridge",
     route: "/moonbridge",
-    icon: <img src={moonbridgeIcon}  height="20px" />,
+    icon: <img src={moonbridgeIcon}  height="20px" alt=""/>,
     component: Moonbridge,
     noCollapse: true,
   },
   {
-    // type: "collapse",
-    // name: "Tables",
-    // key: "tables",
-    // route: "/tables",
-    // icon: <IoStatsChart size="15px" color="inherit" />,
-    // component: Tables,
-    // noCollapse: true,
-  },
-  {
-    // type: "collapse",
-    // name: "Billing",
-    // key: "billing",
-    // route: "/billing",
-    // icon: <BsCreditCardFill size="15px" color="inherit" />,
-    // component: Billing,
-    // noCollapse: true,
-  },
-  {
-    // type: "collapse",
-    // name: "RTL",
-    // key: "rtl",
-    // route: "/rtl",
-    // icon: <IoBuild size="15px" color="inherit" />,
-    // component: RTL,
-    // noCollapse: true,
-  },
-  // { type: "title", title: "Account Pages", key: "account-pages" },
-  {
-    // type: "collapse",
-    // name: "Profile",
-    // key: "profile",
-    // route: "/profile",
-    // icon: <BsFillPersonFill size="15px" color="inherit" />,
-    // component: Profile,
-    // noCollapse: true,
-  },
-  {
-    // type: "collapse",
-    // name: "Sign In",
-    // key: "sign-in",
-    // route: "/authentication/sign-in",
-    // icon: <IoIosDocument size="15px" color="inherit" />,
-    // component: SignIn,
-    // noCollapse: true,
-  },
-  {
-    // type: "collapse",
-    // name: "Sign Up",
-    // key: "sign-up",
-    // route: "/authentication/sign-up",
-    // icon: <IoRocketSharp size="15px" color="inherit" />,
-    // component: SignUp,
-    // noCollapse: true,
+    type: "stepper",
+    name: "STEPPER",
+    key: "stepper",
+    route: "/stepper",
+    component: Stepper,
+    noCollapse: true,
   },
 ];
 

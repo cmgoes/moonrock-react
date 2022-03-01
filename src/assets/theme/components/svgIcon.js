@@ -19,7 +19,7 @@
 // Vision UI Dashboard React helper functions
 import pxToRem from "assets/theme/functions/pxToRem";
 
-export default {
+const svgIcon = {
   defaultProps: {
     fontSize: "inherit",
   },
@@ -38,3 +38,5 @@ export default {
     },
   },
 };
+
+export default svgIcon;

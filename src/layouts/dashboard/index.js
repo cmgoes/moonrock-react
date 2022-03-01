@@ -19,19 +19,17 @@
 // @mui material components
 import Grid from "@mui/material/Grid";
 
-
 import React, { useState,useEffect } from 'react';
-import ReactApexChart from "react-apexcharts";
-
-
+// import ReactApexChart from "react-apexcharts";
+import axios from 'axios'
 
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
 import 'bootstrap/dist/css/bootstrap.css';
 
-import {ethers} from 'ethers'
+import { ethers } from "ethers"
 import Simpleabi from 'contract/Simpleabi.json'
-import data from 'contract/data.json'
+// import data from 'contract/data.json'
 
 
 // Vision UI Dashboard React example components
@@ -39,377 +37,302 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import MiniStatisticsCard from "examples/Cards/StatisticsCards/MiniStatisticsCard";
+import Particles from "examples/Particles";
 
 
 // Vision UI Dashboard React base styles
 
-import colors from "assets/theme/base/colors";
-import LineChart from "examples/Charts/LineCharts/LineChart";
-import { lineChartDataDashboard } from "layouts/dashboard/data/lineChartData";
-import { lineChartOptionsDashboard } from "layouts/dashboard/data/lineChartOptions";
+// import colors from "assets/theme/base/colors";
+// import LineChart from "examples/Charts/LineCharts/LineChart";
+// import { lineChartDataDashboard } from "layouts/dashboard/data/lineChartData";
+// import { lineChartOptionsDashboard } from "layouts/dashboard/data/lineChartOptions";
+
+import { useWeb3Context, useAddress } from 'utils/web3-context';
 
 // Dashboard layout components
 
 
 // React icons
 
-import { IoCash } from "react-icons/io5";
+// import { IoCash } from "react-icons/io5";
 
+const contractAddress = '0x4Ba8a637C6b36e7890c870ba7DBbD8128dAC8b40';
+// const lptokenAddress = "0x4D12a95b725Ad0327e5A8A56ED29238Fd1cAa50e";
+const deadAddress = "0x000000000000000000000000000000000000dead";
+
+//const contractAddress = '0x10ed43c718714eb63d5aa57b78b54704e256024e';
+
+//const contractAddress = '0xAE2Ab58699b5A36a2bccA301d2fD88F5E72984b1';
+
+const scriptUrl = 'https://static.coinstats.app/widgets/coin-chart-widget.js';
+const scriptTagId = 'coinChartWidgetScript';
 
 function Dashboard() {
-  const { gradients } = colors;
-  let contractAddress = '0x4ba8a637c6b36e7890c870ba7dbbd8128dac8b40';
+  // const { gradients } = colors;
+  const { connect, provider, hasCachedProvider } = useWeb3Context();
+  const address = useAddress()
 
-  //let contractAddress = '0x10ed43c718714eb63d5aa57b78b54704e256024e';
+	const [errorMessage] = useState(null);
 
-  //let contractAddress = '0xAE2Ab58699b5A36a2bccA301d2fD88F5E72984b1';
-
-	const [errorMessage, setErrorMessage] = useState(null);
-	const [defaultAccount, setDefaultAccount] = useState(null);
-	const [connButtonText, setConnButtonText] = useState('Connect Wallet');
-  const [connBNCButtonText, setConnBNCButtonText] = useState('Connect Binance');
-
-	const [currentContractVal, setCurrentContractVal] = useState(null);
-  const [tokenName, setTokenName] = useState("Token");
+	// const [currentContractVal, setCurrentContractVal] = useState(null);
+  // const [tokenName, setTokenName] = useState("Token");
 	const [balance, setBalance] = useState(0);
-  const [usdTokenBalance,setUsdTokenBalance] = useState("0");
-  const [userBalance,setUserBalance] = useState(0);
-  const [usdBalance,setUsdBalance] = useState("0");
+  const [usdTokenBalance, setUsdTokenBalance] = useState("0");
+  const [,setUserBalance] = useState(0);
+  const [,setUsdBalance] = useState("0");
 
-
-	const [provider, setProvider] = useState(null);
-	const [signer, setSigner] = useState(null);
-	const [contract, setContract] = useState(null);
-  const [balanceVal, setBalanceVal] = useState(0);
-	const [gasVal, setGasVal] = useState(null);
-  const [moonRockData,setMoonRockData] = useState({});
-  const [count,setCount] = useState(0);
-  const[count2,setCount2] =  useState(0);
+	// const [signer, setSigner] = useState(null);
+	// const [contract, setContract] = useState(null);
+  // const [balanceVal, setBalanceVal] = useState(0);
+	// const [gasVal, setGasVal] = useState(null);
+  // const [moonRockData,setMoonRockData] = useState({});
+  // const [count,setCount] = useState(0);
+  // const[count2,setCount2] =  useState(0);
   const[rockcirculating,setRockcirculating] = useState(0);
   const[rockBurned,setRockBurned] = useState(0);
   const[rockPrice,setRockPrice] = useState(0);
-  const[rockPricePercent,setRockPricePercent] = useState(0);
+  const[,setRockPricePercent] = useState(0);
   
   const[rockMarketCap,setRockMarketCap] = useState(0);
   const[last24hrsVolume,setLast24hrsVolume] = useState(0);
   const[marketRank,setMarketRank] = useState(0);
-  const[volumeChange24h,setVolumeChange24h]= useState(0);
+  // const[volumeChange24h,setVolumeChange24h]= useState(0);
   
   // Create our number formatter.
-var formatter1 = new Intl.NumberFormat('en-US', {
+  var formatter1 = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
-});
+  });
 
-var formatter2 = new Intl.NumberFormat('en-US', {
-  minimumFractionDigits: 0,
-  maximumFractionDigits: 0
-});
-
-  const headers = {'Accept': 'application/json',
-  'Content-Type': 'application/json',
-  'X-CMC_PRO_API_KEY':'75e00f1a-cfef-40f9-958e-25ef02fb9a95',
-  'Access-Control-Allow-Origin': '*' };
+  var formatter2 = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  });
 
   useEffect(() => {    
-    const headers = {'Accept': 'application/json',
-    'Content-Type': 'application/json'};
-
-    const apiGet = async () => {
-      const responseData = await fetch("http://46.249.199.38:26497/market-cap/quotes?symbol=ROCK",{headers})
-      .then(response => response.json())
-      .then(response => {
-      
-        setMoonRockData(response.ROCK);
-        let moonRockData = response.ROCK;
-        let burned = parseFloat(moonRockData.total_supply) - parseFloat(moonRockData.self_reported_circulating_supply);
-        const circulating_supply = moonRockData.self_reported_circulating_supply;
-        setRockcirculating(formatter2.format(circulating_supply));
-        setRockBurned(formatter2.format(burned));
-        //setRockPrice(parseFloat(moonRockData.quote.USD.price).toPrecision(5));
-        setRockPrice(parseFloat(moonRockData.quote.USD.price).toFixed(7));
-        setRockPricePercent(parseFloat(moonRockData.quote.USD.percent_change_24h).toPrecision(3));
-        setRockMarketCap(formatter1.format(moonRockData.self_reported_market_cap));
-        setLast24hrsVolume(formatter1.format(moonRockData.quote.USD.volume_24h));
-        setVolumeChange24h(parseFloat(moonRockData.quote.USD.volume_change_24h).toPrecision(4));
-        setMarketRank(moonRockData.cmc_rank);
-          console.log(response);
-      
-      });
-        //const resJson = await responseData.json();
-        //console.log(resJson);
+    const headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
     };
-    apiGet();
-    let burned = parseFloat(data.data.ROCK.total_supply) - parseFloat(data.data.ROCK.self_reported_circulating_supply);
-    setRockcirculating(formatter2.format(data.data.ROCK.self_reported_circulating_supply));
-    setRockBurned(formatter2.format(burned));
-    setRockPrice(parseFloat(data.data.ROCK.quote.USD.price).toFixed(2));
-    setRockPricePercent(parseFloat(data.data.ROCK.quote.USD.percent_change_24h).toPrecision(3));
-    setRockMarketCap(formatter1.format(data.data.ROCK.self_reported_market_cap));
-    setLast24hrsVolume(formatter1.format(data.data.ROCK.quote.USD.volume_24h));
-    setVolumeChange24h(parseFloat(data.data.ROCK.quote.USD.volume_change_24h).toPrecision(4));
-    setMarketRank(data.data.ROCK.cmc_rank);
-   },[]);
-
-   const connectbncWalletHandler = () =>{
-    if(connBNCButtonText==='Disconnect Wallet'){
-      window.location.reload();
+    const testapi = async () => {
+      const lockContract = new ethers.Contract(contractAddress, Simpleabi, provider);
+      // const lockbalanceOfLP = (await lockContract.balanceOf(lptokenAddress)) / 10 ** 9;
+      const totalSupply = (await lockContract.totalSupply()) / 10 ** 9
+      const burntAmount = (await lockContract.balanceOf(deadAddress))  / 10 ** 9;
+      setRockBurned(formatter2.format(burntAmount));
+      const circulatingSupply = totalSupply - burntAmount
+      setRockcirculating(formatter2.format(circulatingSupply));
       
+      await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=moonrock", { headers })
+        .then(res => {
+          console.log(res.data)
+          const tokenPrice = res.data[0].current_price
+          setRockPrice(tokenPrice);
+          setRockPricePercent(res.data[0].price_change_percentage_24h)
+          // const high_24h = res.data[0].high_24h
+          // const low_24h = res.data[0].low_24h
+          const marketCap = tokenPrice * circulatingSupply
+          setRockMarketCap(formatter1.format(marketCap));
+          // const liquidity = 2 * lockbalanceOfLP * tokenPrice
+          setLast24hrsVolume(res.data[0].total_volume);
+          setMarketRank(5791)
+        })
     }
-    if (window.BinanceChain) {
+    testapi()
+    // const apiGet = async () => {
+    //   const responseData = await fetch("http://46.249.199.38:26497/market-cap/quotes?symbol=ROCK",{headers})
+    //   .then(response => response.json())
+    //   .then(response => {
+      
+    //     setMoonRockData(response.ROCK);
+    //     let moonRockData = response.ROCK;
+    //     let burned = parseFloat(moonRockData.total_supply) - parseFloat(moonRockData.self_reported_circulating_supply);
+    //     const circulating_supply = moonRockData.self_reported_circulating_supply;
+    //     setRockcirculating(formatter2.format(circulating_supply));
+    //     setRockBurned(formatter2.format(burned));
+    //     //setRockPrice(parseFloat(moonRockData.quote.USD.price).toPrecision(5));
+    //     setRockPrice(parseFloat(moonRockData.quote.USD.price).toFixed(7));
+    //     setRockPricePercent(parseFloat(moonRockData.quote.USD.percent_change_24h).toPrecision(3));
+    //     setRockMarketCap(formatter1.format(moonRockData.self_reported_market_cap));
+    //     setLast24hrsVolume(formatter1.format(moonRockData.quote.USD.volume_24h));
+    //     setVolumeChange24h(parseFloat(moonRockData.quote.USD.volume_change_24h).toPrecision(4));
+    //     setMarketRank(moonRockData.cmc_rank);
+    //       console.log(response);
+    //   });
+    //     //const resJson = await responseData.json();
+    //     //console.log(resJson);
+    // };
+    // // apiGet();
+                      // let burned = parseFloat(data.data.ROCK.total_supply) - parseFloat(data.data.ROCK.self_reported_circulating_supply);
+                                // setRockcirculating(formatter2.format(data.data.ROCK.self_reported_circulating_supply));
+                                // setRockBurned(formatter2.format(burned));
+                                // setRockPrice(parseFloat(data.data.ROCK.quote.USD.price).toFixed(2));
+                            // setRockPricePercent(parseFloat(data.data.ROCK.quote.USD.percent_change_24h).toPrecision(3));
+                                // setRockMarketCap(formatter1.format(data.data.ROCK.self_reported_market_cap));
+    // setLast24hrsVolume(formatter1.format(data.data.ROCK.quote.USD.volume_24h));
+    // setVolumeChange24h(parseFloat(data.data.ROCK.quote.USD.volume_change_24h).toPrecision(4));
+    // setMarketRank(data.data.ROCK.cmc_rank);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
 
-      window.BinanceChain.request({method: "eth_accounts"})
-     
-      .then(result => {
-        accountBNCChangedHandler(result[0]);
-        setConnBNCButtonText('Disconnect Wallet');
-        
-        
-         
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = scriptUrl;
+    script.async = true;
+    script.id = scriptTagId;
+
+    document.body.appendChild(script);
+
+    return () => {
+      const script = document.getElementById(scriptTagId);
+      if (script) {
+        script.remove();
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // update account, will cause component re-render
+
+
+  const updateBalance = async () => {
+    const lockContract = new ethers.Contract(contractAddress, Simpleabi, provider);
+    let balanceBigN = await lockContract.balanceOf(address);
+    let balanceNumber = balanceBigN;
+
+    let tokenDecimals = await lockContract.decimals();
+
+    let tokenBalance = balanceNumber / Math.pow(10, tokenDecimals);
+
+    setBalance(formatter1.format(toFixed(tokenBalance)));
+    let usdtoken = tokenBalance * rockPrice;
+    setUsdTokenBalance(formatter1.format(usdtoken));
+    console.log(toFixed(tokenBalance));
+    if(address) {
+      provider.getBalance(address)
+      .then(balanceResult => {
+        let balance = formatter1.format(ethers.utils.formatEther(balanceResult));
+        setUserBalance(balance);
+        let a = balance*391;
+        setUsdBalance(formatter1.format(a));
       })
-      .catch(error => {
-        setErrorMessage(error.message);
-      
-      });
-     
-     } else {
-      console.log('Need to install binance chain');
-      setErrorMessage('Please install binance chain browser extension to interact');
-     }
-     
-   }
-  const connectWalletHandler = () => {
-
-    if(connButtonText==='Disconnect Wallet'){
-      window.location.reload();
-    }
-    console.log("logged");
-    console.log(window.ethereum);
-    
-   if (window.ethereum && window.ethereum.isMetaMask) {
-
- window.ethereum.request({ method: 'eth_requestAccounts'})
- .then(result => {
-   accountChangedHandler(result[0]);
-   setConnButtonText('Disconnect Wallet');
-   
-   
-    
- })
- .catch(error => {
-   setErrorMessage(error.message);
- 
- });
-
-} else {
- console.log('Need to install MetaMask');
- setErrorMessage('Please install MetaMask browser extension to interact');
-}
-
-}
-
-
-// update account, will cause component re-render
-const accountChangedHandler = (newAccount) => {
- setDefaultAccount(newAccount);
- updateEthers();
-}
-
-const accountBNCChangedHandler = (newAccount) => {
-  setDefaultAccount(newAccount);
-  updateBNC();
- }
-
-const chainChangedHandler = () => {
- // reload the page to avoid any errors with chain change mid use of application
- window.location.reload();
-}
-
-const updateBNC = async () => {
-  if (window.BinanceChain) {
- let tempProvider = new ethers.providers.Web3Provider(window.BinanceChain);
- setProvider(tempProvider);
-
- let tempSigner = tempProvider.getSigner();
- setSigner(tempSigner);
-
- let tempContract = new ethers.Contract(contractAddress, Simpleabi, tempSigner);
- setContract(tempContract);
- 
-}
-}
-
-
-
-const updateEthers = async () => {
-  if (window.ethereum) {
- let tempProvider = new ethers.providers.Web3Provider(window.ethereum);
- setProvider(tempProvider);
-
- let tempSigner = tempProvider.getSigner();
- setSigner(tempSigner);
-
- let tempContract = new ethers.Contract(contractAddress, Simpleabi, tempSigner);
- setContract(tempContract);
- 
-}
-}
-
-const updateBalance = async () => {
-  let balanceBigN = await contract.balanceOf(defaultAccount);
-  let balanceNumber = balanceBigN;
-
-  let tokenDecimals = await contract.decimals();
-
-  let tokenBalance = balanceNumber / Math.pow(10, tokenDecimals);
-
-  setBalance(formatter1.format(toFixed(tokenBalance)));
-  let usdtoken = tokenBalance * rockPrice;
-  setUsdTokenBalance(formatter1.format(usdtoken));
-  console.log(toFixed(tokenBalance));
-  if(defaultAccount){
-    provider.getBalance(defaultAccount)
-    .then(balanceResult => {
-      let balance = formatter1.format(ethers.utils.formatEther(balanceResult));
-      setUserBalance(balance);
-      let a = balance*391;
-      setUsdBalance(formatter1.format(a));
-      
-    })
     };
-
-}
-function toFixed(x) {
-  if (Math.abs(x) < 1.0) {
-     var e = parseInt(x.toString().split('e-')[1]);
-     if (e) {
-        x *= Math.pow(10, e - 1);
-        x = '0.' + (new Array(e)).join('0') + x.toString().substring(2);
-     }
-  } else {
-     var e = parseInt(x.toString().split('+')[1]);
-     if (e > 20) {
-        e -= 20;
-        x /= Math.pow(10, e);
-        x += (new Array(e + 1)).join('0');
-     }
   }
-  return x;
-}
-const getCurrentVal = async () => {
-  let val = await contract.get();
-  setCurrentContractVal(val);
-}
-const updateTokenName = async () => {
-  setTokenName(await contract.name());
-}
-const getPercentClass = (val) => {
-  return (val>=0) ? 'success' : 'error';
-}
-useEffect(() => {
-  if (contract != null) {
-    updateBalance();
-    //updateTokenName();
+  function toFixed(x) {
+    if (Math.abs(x) < 1.0) {
+      var e = parseInt(x.toString().split('e-')[1]);
+      if (e) {
+          x *= Math.pow(10, e - 1);
+          x = '0.' + (new Array(e)).join('0') + x.toString().substring(2);
+      }
+    } else {
+      e = parseInt(x.toString().split('+')[1]);
+      if (e > 20) {
+          e -= 20;
+          x /= Math.pow(10, e);
+          x += (new Array(e + 1)).join('0');
+      }
+    }
+    return x;
   }
-}, [contract,updateBalance]);
 
-
-
-
+  useEffect(() => {
+    if (hasCachedProvider()) {
+        connect()
+        updateBalance();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [connect, updateBalance]);
 
   return (
     
     <DashboardLayout>
-      <DashboardNavbar connectWalletHandler={connectWalletHandler} connectbncWalletHandler={connectbncWalletHandler} connButtonText={connButtonText} connBNCButtonText={connBNCButtonText} defaultAccount={defaultAccount} />
+      <DashboardNavbar />
       <div style={{ color: '#FFF'}}>{errorMessage}</div> 
-    
+      <Particles />
       <VuiBox py={3}>
         <VuiBox mb={3}>
-        <Grid container spacing={2} className="dashboard-background">
-          <Grid item xs={12} md={9} xl={9}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={4} xl={4}>
-              <MiniStatisticsCard
-                title={{ text: "Total Balance", subText: "$"+usdTokenBalance +" USD", fontWeight: "regular" }}
-                count={ balance +" ROCK" }
-              />
-            </Grid>
-            <Grid item xs={12} md={4} xl={4}>
-              <MiniStatisticsCard
-                title={{ text: "Last 24H Reflections", subText: "$0", fontWeight: "regular" }}
-                count={0}
-              />
-            </Grid>
-            <Grid item xs={12} md={4} xl={4}>
-              <MiniStatisticsCard
-                title={{ text: "Reflections Since First Buy", subText: "$0", fontWeight: "regular" }}
-                count={0}
-              />
-            </Grid>
-           
-           
-            <Grid item xs={12} md={4} xl={4}>
-            
-              <MiniStatisticsCard
-                title={{ text: "Rock Circulating Supply" }}
-                count= {rockcirculating}
-              />
-            </Grid>
-            <Grid item xs={12} md={4} xl={4}>
-              <MiniStatisticsCard
-                title={{ text: "Totale ROCK Burned" }}
-                count={rockBurned}
-              />
-            </Grid>
-            <Grid item xs={12} md={4} xl={4}>
-              <MiniStatisticsCard
-                title={{ text: "Rock Price" }}
-                count={rockPrice}
+          <Grid container spacing={2} justifyContent="center" className="dashboard-background">
+            <Grid item xs={12} md={9} xl={9}>
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={4} xl={4}>
+                  <MiniStatisticsCard
+                    title={{ text: "Total Balance", subText: "$"+usdTokenBalance +" USD", fontWeight: "regular" }}
+                    count={ balance +" ROCK" }
+                  />
+                </Grid>
+                <Grid item xs={12} md={4} xl={4}>
+                  <MiniStatisticsCard
+                    title={{ text: "Last 24h Reflections", subText: "$0", fontWeight: "regular" }}
+                    count={0}
+                  />
+                </Grid>
+                <Grid item xs={12} md={4} xl={4}>
+                  <MiniStatisticsCard
+                    title={{ text: "Reflections Since First Buy", subText: "$0", fontWeight: "regular" }}
+                    count={0}
+                  />
+                </Grid>
+              
+              
+                <Grid item xs={12} md={4} xl={4}>
                 
-              />
-            </Grid>
-            
-            <Grid item xs={12} md={4} xl={4}>
-              <MiniStatisticsCard
-                title={{ text: "ROCK Market Cap" }}
-                count={'$'+rockMarketCap}
+                  <MiniStatisticsCard
+                    title={{ text: "$ROCK Circulating Supply" }}
+                    count= {rockcirculating}
+                  />
+                </Grid>
+                <Grid item xs={12} md={4} xl={4}>
+                  <MiniStatisticsCard
+                    title={{ text: "Total $ROCK Burned" }}
+                    count={rockBurned}
+                  />
+                </Grid>
+                <Grid item xs={12} md={4} xl={4}>
+                  <MiniStatisticsCard
+                    title={{ text: "$ROCK Price" }}
+                    count={rockPrice}
+                    
+                  />
+                </Grid>
                 
-              />
+                <Grid item xs={12} md={4} xl={4}>
+                  <MiniStatisticsCard
+                    title={{ text: "$ROCK Market Cap" }}
+                    count={'$'+rockMarketCap}
+                    
+                  />
+                </Grid>
+                <Grid item xs={12} md={4} xl={4}>
+                  <MiniStatisticsCard
+                    title={{ text: "Last 24h Volume" }}
+                    count={'$'+last24hrsVolume}
+                    
+                  />
+                </Grid>
+                <Grid item xs={12} md={4} xl={4}>
+                  <MiniStatisticsCard
+                    title={{ text: "Market Rank" }}
+                    count={'#'+marketRank}
+                  />
+                </Grid>
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={4} xl={4}>
-              <MiniStatisticsCard
-                title={{ text: "Last 24Hours Volume" }}
-                count={'$'+last24hrsVolume}
-                
-              />
-            </Grid>
-            <Grid item xs={12} md={4} xl={4}>
-              <MiniStatisticsCard
-                title={{ text: "Market Rank" }}
-                count={'#'+marketRank}
-              />
-            </Grid>
-            </Grid>
-            </Grid>
-            <Grid item xs={12} md={12} xl={12} style={{height:"420px"}}>
-            <coin-stats-chart-widget type="large" coin-id="moonrock" width="100%" chart-height="150"
-currency="USD" locale="en" bg-color="none" status-up-color="#74D492" status-down-color="#FE4747"
-bg-color="none" text-color="#FFFFFF" buttons-color="#1C1B1B" chart-color="#FFA959"
-chart-gradient-from="rgba(255,255,255,0.07)" chart-gradient-to="rgba(0,0,0,0)"
-border-color="rgba(255,255,255,0.15)" btc-color="#6DD400" eth-color="#67B5FF"
-chart-label-background="#000000" font="Montserrat"
-candle-grids-color="rgba(255,255,255,0.1)"></coin-stats-chart-widget>
+            <Grid item xs={12} md={9} xl={9} style={{height:"450px", paddingTop: '40px'}}>
+              <coin-stats-chart-widget type="large" coin-id="moonrock" width="100%" chart-height="250"
+                currency="USD" locale="en" bg-color="rgba(6, 11, 40, 0.67)" status-up-color="#74D492" status-down-color="#FE4747"
+                text-color="#FFFFFF" buttons-color="6, 15, 48, 0.97" chart-color="#FFA959"
+                chart-gradient-from="rgba(255,255,255,0.07)" chart-gradient-to="rgba(0,0,0,0)"
+                border-color="rgba(255,255,255,0.15)" btc-color="#6DD400" eth-color="#67B5FF"
+                chart-label-background="#000000" font="Montserrat"
+                candle-grids-color="rgba(255,255,255,0.1)"
+              ></coin-stats-chart-widget>
             </Grid>
           </Grid>
         </VuiBox>
-       
-        
-        
       </VuiBox>
-
-     
-      
-        <Footer />
+      <Footer />
     </DashboardLayout>
   );
 }

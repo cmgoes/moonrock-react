@@ -1,14 +1,10 @@
 import { useState, useEffect, useMemo } from "react";
 // react-router components
-import { Route, Switch, Redirect, useLocation } from "react-router-dom";
+import { HashRouter, Route, Switch, useLocation } from "react-router-dom";
 
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import Icon from "@mui/material/Icon";
-
-// Vision UI Dashboard React components
-import VuiBox from "components/VuiBox";
 
 // Vision UI Dashboard React example components
 import Sidenav from "examples/Sidenav";
@@ -91,6 +87,7 @@ export default function App() {
   return direction === "rtl" ? (
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={themeRTL}>
+        <HashRouter>
         <CssBaseline />
         {layout === "dashboard" && (
           <>
@@ -110,10 +107,12 @@ export default function App() {
           {getRoutes(routes)}
           {/* <Redirect from="*" to="/dashboard" /> */}
         </Switch>
+        </HashRouter>
       </ThemeProvider>
     </CacheProvider>
   ) : (
     <ThemeProvider theme={theme}>
+      <HashRouter>
       <CssBaseline />
       {layout === "dashboard" && (
         <>
@@ -130,8 +129,9 @@ export default function App() {
       {layout === "vr"}
       <Switch>
         {getRoutes(routes)}
-        {/* <Redirect from="*" to="/dashboard" /> */}
+        {/* <Redirect from="*" to="/" /> */}
       </Switch>
+      </HashRouter>
     </ThemeProvider>
   );
 }

@@ -26,7 +26,7 @@ import pxToRem from "assets/theme/functions/pxToRem";
 const { borderWidth } = borders;
 const { light } = colors;
 
-export default {
+const tableCell = {
   styleOverrides: {
     root: {
       backgroundColor: `${light.main} !important`,
@@ -38,3 +38,5 @@ export default {
     },
   },
 };
+
+export default tableCell;

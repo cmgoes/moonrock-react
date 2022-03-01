@@ -26,7 +26,7 @@ import pxToRem from "assets/theme/functions/pxToRem";
 const { inputColors } = colors;
 const { borderWidth, borderRadius } = borders;
 
-export default {
+const input = {
   styleOverrides: {
     root: {
       display: "flex !important",
@@ -49,3 +49,5 @@ export default {
     },
   },
 };
+
+export default input;

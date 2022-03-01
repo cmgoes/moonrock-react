@@ -22,9 +22,9 @@ import PropTypes from "prop-types";
 // @mui material components
 import Collapse from "@mui/material/Collapse";
 import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
+// import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import Icon from "@mui/material/Icon";
+// import Icon from "@mui/material/Icon";
 
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
@@ -32,8 +32,8 @@ import VuiBox from "components/VuiBox";
 // Custom styles for the SidenavCollapse
 import {
   collapseItem,
-  collapseIconBox,
-  collapseIcon,
+  // collapseIconBox,
+  // collapseIcon,
   collapseText,
 } from "examples/Sidenav/styles/sidenavCollapse";
 
@@ -49,7 +49,7 @@ function SidenavCollapse({ color, icon, name, children, active, noCollapse, open
       <ListItem component="li">
         <VuiBox {...rest} sx={(theme) => collapseItem(theme, { active, transparentSidenav })}>
           
-          <div style={{padding:"13px"}}></div>
+          <div style={{padding:"13px 6px"}}></div>
           <ListItemText
             primary={name}
             sx={(theme) => collapseText(theme, { miniSidenav, transparentSidenav, active })}

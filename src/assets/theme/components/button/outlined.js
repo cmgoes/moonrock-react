@@ -28,7 +28,7 @@ const { transparent, light, info, secondary } = colors;
 const { size } = typography;
 const { buttonBoxShadow } = boxShadows;
 
-export default {
+const outlined = {
   base: {
     minHeight: pxToRem(42),
     color: light.main,
@@ -95,3 +95,5 @@ export default {
     },
   },
 };
+
+export default outlined;

@@ -21,7 +21,7 @@
  * You can customized the colors for the entire Vision UI Dashboard  Material using thie file.
  */
 
-export default {
+const colors = {
   // Vision UI Colors
   background: {
     default: "#f8f9fa",
@@ -438,3 +438,5 @@ export default {
     indicator: { boxShadow: "#ddd" },
   },
 };
+
+export default colors;

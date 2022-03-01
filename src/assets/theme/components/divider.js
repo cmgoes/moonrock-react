@@ -25,7 +25,7 @@ import pxToRem from "assets/theme/functions/pxToRem";
 
 const { dark, transparent, white, info } = colors;
 
-export default {
+const divider = {
   styleOverrides: {
     root: {
       backgroundColor: transparent.main,
@@ -67,3 +67,5 @@ export default {
     },
   },
 };
+
+export default divider;

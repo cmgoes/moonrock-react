@@ -25,7 +25,7 @@ const { transparent } = colors;
 const { xxl } = boxShadows;
 const { borderRadius } = borders;
 
-export default {
+const tableContainer = {
   styleOverrides: {
     root: {
       backgroundColor: transparent.main,
@@ -55,3 +55,5 @@ export default {
     },
   },
 };
+
+export default tableContainer;

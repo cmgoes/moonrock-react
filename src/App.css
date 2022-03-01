@@ -3,6 +3,7 @@
 }
 body {
   background: linear-gradient(135deg, rgb(192, 5, 217) 0%, rgb(115, 23, 170) 25%, rgb(49, 39, 130) 52%, rgb(33, 104, 170) 82%, rgb(5, 219, 242) 100%);
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -12,7 +13,7 @@ body {
 .dashboard-background{
   position: relative;
 }
-.dashboard-background::after{
+/* .dashboard-background::after{
   content: "";
   position: absolute;
   width: 100%;
@@ -23,7 +24,7 @@ body {
   transform: rotate(90deg);
   right: -19%;
   top: 13%;
-}
+} */
 coin-stats-portfolio-widget > div:nth-child(1) > table:nth-child(2) >
 tbody:nth-child(1) > tr:nth-child(16) {
 display: none;

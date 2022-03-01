@@ -16,7 +16,7 @@
 
 */
 
-export default {
+const listItemText = {
   styleOverrides: {
     root: {
       marginTop: 0,
@@ -24,3 +24,5 @@ export default {
     },
   },
 };
+
+export default listItemText;

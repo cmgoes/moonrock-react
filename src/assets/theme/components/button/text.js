@@ -26,7 +26,7 @@ import pxToRem from "assets/theme/functions/pxToRem";
 const { transparent, primary, grey, text } = colors;
 const { size } = typography;
 
-export default {
+const buttonText = {
   base: {
     backgroundColor: transparent.main,
     height: "max-content",
@@ -108,3 +108,5 @@ export default {
     },
   },
 };
+
+export default buttonText;

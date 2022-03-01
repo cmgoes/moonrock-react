@@ -22,7 +22,7 @@ import contained from "assets/theme/components/button/contained";
 import outlined from "assets/theme/components/button/outlined";
 import text from "assets/theme/components/button/text";
 
-export default {
+const button = {
   defaultProps: {
     disableRipple: true,
   },
@@ -45,3 +45,5 @@ export default {
     textSecondary: { ...text.secondary },
   },
 };
+
+export default button;

@@ -16,7 +16,7 @@
 
 */
 
-export default {
+const listItem = {
   defaultProps: {
     disableGutters: true,
   },
@@ -28,3 +28,5 @@ export default {
     },
   },
 };
+
+export default listItem;

@@ -19,7 +19,7 @@
 // @mui material components
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
-import linearGradient from "assets/theme/functions/linearGradient";
+// import linearGradient from "assets/theme/functions/linearGradient";
 
 export default styled(Button)(({ theme, ownerState }) => {
   const { palette, functions, borders } = theme;

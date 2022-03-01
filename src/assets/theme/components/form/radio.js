@@ -27,7 +27,7 @@ import linearGradient from "assets/theme/functions/linearGradient";
 const { borderWidth, borderColor } = borders;
 const { transparent, gradients, info } = colors;
 
-export default {
+const radio = {
   styleOverrides: {
     root: {
       backgroundPosition: "center",
@@ -88,3 +88,5 @@ export default {
     },
   },
 };
+
+export default radio;

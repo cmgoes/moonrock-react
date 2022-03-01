@@ -30,7 +30,7 @@ const { card } = gradients;
 const { borderWidth, borderRadius } = borders;
 const { xxl } = boxShadows;
 
-export default {
+const cardRoot = {
   styleOverrides: {
     root: {
       display: "flex",
@@ -48,3 +48,5 @@ export default {
     },
   },
 };
+
+export default cardRoot;

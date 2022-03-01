@@ -26,7 +26,7 @@ import pxToRem from "assets/theme/functions/pxToRem";
 const { grey, info } = colors;
 const { borderRadius } = borders;
 
-export default {
+const tabsRoot = {
   styleOverrides: {
     root: {
       position: "relative",
@@ -61,3 +61,5 @@ export default {
     },
   },
 };
+
+export default tabsRoot;

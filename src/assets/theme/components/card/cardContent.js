@@ -19,7 +19,7 @@
 // Vision UI Dashboard React Helper Functions
 import pxToRem from "assets/theme/functions/pxToRem";
 
-export default {
+const cardContent = {
   styleOverrides: {
     root: {
       marginTop: 0,
@@ -28,3 +28,5 @@ export default {
     },
   },
 };
+
+export default cardContent;

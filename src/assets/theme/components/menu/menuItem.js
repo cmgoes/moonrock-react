@@ -28,7 +28,7 @@ const { light, text, dark } = colors;
 const { borderRadius } = borders;
 const { size } = typography;
 
-export default {
+const menuItem = {
   styleOverrides: {
     root: {
       minWidth: pxToRem(160),
@@ -46,3 +46,5 @@ export default {
     },
   },
 };
+
+export default menuItem;

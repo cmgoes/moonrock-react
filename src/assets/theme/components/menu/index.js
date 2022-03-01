@@ -32,7 +32,7 @@ const { size } = typography;
 const { white, borderCol, gradients, transparent } = colors;
 const { borderRadius } = borders;
 
-export default {
+const menuRoot = {
   defaultProps: {
     disableAutoFocusItem: true,
   },
@@ -64,3 +64,5 @@ export default {
     },
   },
 };
+
+export default menuRoot;

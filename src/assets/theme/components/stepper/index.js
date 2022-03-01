@@ -24,7 +24,7 @@ import pxToRem from "assets/theme/functions/pxToRem";
 
 const { transparent } = colors;
 
-export default {
+const stepperRoot = {
   styleOverrides: {
     root: {
       margin: `${pxToRem(48)} 0`,
@@ -36,3 +36,5 @@ export default {
     },
   },
 };
+
+export default stepperRoot;

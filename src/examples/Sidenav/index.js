@@ -33,11 +33,11 @@ import Icon from "@mui/material/Icon";
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
-import VuiButton from "components/VuiButton";
+// import VuiButton from "components/VuiButton";
 
 // Vision UI Dashboard React example components
 import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
-import SidenavCard from "examples/Sidenav/SidenavCard";
+// import SidenavCard from "examples/Sidenav/SidenavCard";
 
 // Custom styles for the Sidenav
 import SidenavRoot from "examples/Sidenav/SidenavRoot";
@@ -83,6 +83,7 @@ function Sidenav({ color, brandName, routes, ...rest }) {
     if (window.innerWidth < 1440) {
       setTransparentSidenav(dispatch, false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
@@ -187,7 +188,7 @@ function Sidenav({ color, brandName, routes, ...rest }) {
               }
             >
               {/* <SimmmpleLogo size="24px" /> */}
-              <img src={logoM}  height="30px" />
+              <img src={logoM}  height="30px" alt=""/>
             </VuiBox>
             <VuiTypography
               variant="button"

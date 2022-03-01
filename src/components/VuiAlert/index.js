@@ -44,7 +44,9 @@ function VuiAlert({ color, dismissible, children, ...rest }) {
           {children}
         </VuiBox>
         {dismissible ? (
-          <VuiAlertCloseIcon onClick={mount ? handleAlertStatus : null}>&times;</VuiAlertCloseIcon>
+          <VuiAlertCloseIcon onClick={mount ? handleAlertStatus : null}>
+            &times;
+          </VuiAlertCloseIcon>
         ) : null}
       </VuiAlertRoot>
     </Fade>

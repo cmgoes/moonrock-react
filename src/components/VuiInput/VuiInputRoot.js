@@ -31,7 +31,7 @@ export default styled(InputBase)(({ theme, ownerState }) => {
 
   // border color value
 
-  let borderColorValue = "";
+  // let borderColorValue = "";
 
   if (error) {
     borderColorValue = inputColors.error;
@@ -118,7 +118,7 @@ export default styled(InputBase)(({ theme, ownerState }) => {
 
   // styles for the input containing an icon
   const withIconStyles = () => {
-    let withIconBorderRadiusValue = `0 ${borderRadius.md} ${borderRadius.md} 0`;
+    // let withIconBorderRadiusValue = `0 ${borderRadius.md} ${borderRadius.md} 0`;
 
     if (direction === "rtl" && iconDirection === "left") {
       withIconBorderRadiusValue = `0 ${borderRadius.md} ${borderRadius.md} 0`;
@@ -158,7 +158,7 @@ export default styled(InputBase)(({ theme, ownerState }) => {
   };
 
   return {
-    backgroundColor: disabled ? `${grey[200]} !important` : white.main,
+    // backgroundColor: disabled ? `${grey[200]} !important` : white.main,
     pointerEvents: disabled ? "none" : "auto",
     backgroundColor: `${disabled ? grey[600] : inputColors.backgroundColor} !important`,
     color: `${white.main} !important`,
