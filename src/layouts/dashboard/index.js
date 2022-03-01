@@ -29,8 +29,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import { ethers } from "ethers"
 import Simpleabi from 'contract/Simpleabi.json'
-// import data from 'contract/data.json'
-
 
 // Vision UI Dashboard React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
