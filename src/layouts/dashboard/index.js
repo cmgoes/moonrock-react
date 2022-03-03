@@ -134,7 +134,7 @@ function Dashboard() {
           setRockMarketCap(formatter1.format(marketCap));
           // const liquidity = 2 * lockbalanceOfLP * tokenPrice
           setLast24hrsVolume(formatter2.format(res.data[0].total_volume));
-          setMarketRank(formatter2.format(5791));
+          setMarketRank(formatter2.format(5877));
         })
     }
     testapi()

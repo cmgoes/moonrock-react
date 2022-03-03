@@ -42,6 +42,7 @@ export const Web3ContextProvider = ({ children }) => {
 
     const [web3Modal] = useState(
         new Web3Modal({
+            network: 'binance',
             cacheProvider: true,
             providerOptions: {
                 walletconnect: {
